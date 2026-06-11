@@ -9,6 +9,8 @@ AI Prompt Lab is intentionally small. The project should remain useful without r
 - Treat templates as practical workflows, not marketing copy.
 - Keep user content local unless a future feature clearly asks for external integration.
 - Make every user-facing feature easy to test with the smoke test.
+- Keep the live demo deployable from `main` with GitHub Pages.
+- Describe quality scoring as a heuristic checklist, not as AI evaluation.
 
 ## Non-Goals
 
@@ -21,6 +23,7 @@ AI Prompt Lab is intentionally small. The project should remain useful without r
 
 - Does the change work by opening `index.html` directly?
 - Does the smoke test pass?
+- Do the prompt core unit tests pass in CI?
 - Is the new template editable and model-agnostic?
 - Does the README still describe the current behavior?
 - Does the change avoid storing secrets or sending prompt content externally?

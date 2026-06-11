@@ -6,11 +6,17 @@ The app runs as a static site with no build step, no API key, and no backend. It
 
 ![CI](https://github.com/greg59701029/ai-prompt-lab/actions/workflows/ci.yml/badge.svg)
 
+## Live Demo
+
+Try the app online:
+
+[Open the live demo](https://greg59701029.github.io/ai-prompt-lab/)
+
 ## Features
 
 - Structured prompt builder for role, goal, audience, context, constraints, tone, and output format
 - Templates for product planning, coding tasks, research summaries, marketing briefs, support responses, and data analysis
-- Prompt quality score with simple checks for specificity and ambiguity
+- Heuristic prompt quality score with checks for specificity, evidence, constraints, and uncertainty handling
 - Word and character counts for prompt size awareness
 - One-click copy and text download
 - Local recent prompt history with browser storage
@@ -18,7 +24,7 @@ The app runs as a static site with no build step, no API key, and no backend. It
 
 ## Demo
 
-Open `index.html` in a browser, or run a local server:
+Use the live demo above, open `index.html` in a browser, or run a local server:
 
 ```bash
 python -m http.server 8080
@@ -37,18 +43,21 @@ http://localhost:8080
 |-- index.html
 |-- styles.css
 |-- app.js
+|-- prompt-core.js
 |-- examples/
 |   `-- prompts.md
 |-- docs/
 |   |-- maintainer-notes.md
 |   `-- roadmap-issues.md
 |-- tests/
-|   `-- smoke_test.py
+|   |-- smoke_test.py
+|   `-- prompt_core.test.js
 `-- .github/
     |-- ISSUE_TEMPLATE/
     |-- PULL_REQUEST_TEMPLATE.md
     `-- workflows/
-        `-- ci.yml
+        |-- ci.yml
+        `-- pages.yml
 ```
 
 ## Why This Exists
@@ -56,6 +65,8 @@ http://localhost:8080
 Most prompt examples are either too vague or too tied to a single model. This project focuses on a reusable structure that helps users define the task, context, constraints, and output format before sending a prompt to an AI system.
 
 The goal is not to replace prompt engineering judgment. It is to make the first draft clearer, more specific, and easier to improve.
+
+The quality score is a deterministic heuristic. It does not call an AI model and should be treated as a checklist-style signal, not as an authoritative evaluation.
 
 ## Development
 
@@ -65,7 +76,13 @@ Run the smoke test:
 python tests/smoke_test.py
 ```
 
-The test verifies that the static app includes its core assets, expected UI targets, templates, and basic safety checks.
+Run the prompt core unit tests:
+
+```bash
+node tests/prompt_core.test.js
+```
+
+The tests verify that the static app includes its core assets, expected UI targets, prompt generation, scoring behavior, template quality, and basic safety checks.
 
 ## Maintenance
 
@@ -75,6 +92,7 @@ This project is intentionally small and dependency-free. Maintenance focuses on:
 - improving the scoring checklist
 - keeping the UI accessible on mobile and desktop
 - documenting examples clearly enough for new contributors
+- keeping the GitHub Pages demo working
 
 ## Deploy to GitHub Pages
 

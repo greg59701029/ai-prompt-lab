@@ -34,6 +34,13 @@ git push -u origin main
 ## After Push
 
 - Pin `ai-prompt-lab` on the GitHub profile
-- Enable GitHub Pages from the `main` branch and `/root`
+- Confirm the `Deploy GitHub Pages` workflow succeeds
+- If GitHub asks for a Pages source, choose **GitHub Actions**
 - Add topics such as `ai`, `prompt-engineering`, `javascript`, `static-site`, and `github-pages`
 - Copy `PROFILE_SNIPPET.md` into a profile README repository named `greg59701029`
+
+Expected demo URL:
+
+```text
+https://greg59701029.github.io/ai-prompt-lab/
+```

@@ -8,6 +8,9 @@ const fields = {
   format: document.querySelector("#format-input"),
 };
 
+const promptCore = window.PromptLabCore;
+const { templates, buildPrompt, scorePrompt, countPrompt } = promptCore;
+
 const output = document.querySelector("#prompt-output");
 const copyButton = document.querySelector("#copy-btn");
 const downloadButton = document.querySelector("#download-btn");
@@ -24,75 +27,6 @@ const charCount = document.querySelector("#char-count");
 const storageKey = "ai-prompt-lab-state";
 const historyKey = "ai-prompt-lab-history";
 
-const templates = {
-  product: {
-    role: "Senior product strategist",
-    goal: "Turn a rough product idea into a clear MVP plan with priorities.",
-    audience: "Solo founder or small product team",
-    context:
-      "The idea is early. Time is limited. The answer should help decide what to build first.",
-    constraints:
-      "Avoid vague advice. Include risks, assumptions, and a simple validation step.",
-    tone: "direct and practical",
-    format: "step-by-step plan",
-  },
-  code: {
-    role: "Senior software engineer",
-    goal: "Review the implementation plan and produce a practical coding task breakdown.",
-    audience: "Developer preparing a GitHub project",
-    context:
-      "The project should be small, maintainable, and easy to explain in a README.",
-    constraints:
-      "Prefer simple dependencies, include tests, and call out any risky assumptions.",
-    tone: "technical and precise",
-    format: "working code with explanation",
-  },
-  research: {
-    role: "Careful research assistant",
-    goal: "Summarize a topic and identify the most useful next questions.",
-    audience: "Busy reader who needs accurate context",
-    context:
-      "The reader wants a balanced summary, not a promotional answer.",
-    constraints:
-      "Separate facts from assumptions. Flag uncertainty. Keep the final recommendation short.",
-    tone: "executive and clear",
-    format: "short report with recommendation",
-  },
-  marketing: {
-    role: "Lifecycle marketing strategist",
-    goal: "Create a focused campaign brief for a product launch.",
-    audience: "Marketing lead preparing copy, channels, and success metrics",
-    context:
-      "The campaign should explain the customer problem, offer, proof points, and launch sequence.",
-    constraints:
-      "Avoid hype. Include target segment, positioning angle, key messages, channels, and measurable outcomes.",
-    tone: "executive and clear",
-    format: "bullet list with clear next steps",
-  },
-  support: {
-    role: "Customer support operations specialist",
-    goal: "Turn a messy customer issue into a clear support response and escalation plan.",
-    audience: "Support agent handling a time-sensitive ticket",
-    context:
-      "The customer needs a practical answer, clear ownership, and a path to resolution.",
-    constraints:
-      "Be empathetic, state what is known, avoid unsupported promises, and list follow-up questions.",
-    tone: "friendly and concise",
-    format: "step-by-step plan",
-  },
-  data: {
-    role: "Product data analyst",
-    goal: "Diagnose a metric movement and identify the most likely drivers.",
-    audience: "Product manager deciding what to investigate next",
-    context:
-      "The answer should separate confirmed evidence from hypotheses and recommend useful follow-up cuts.",
-    constraints:
-      "Call out missing data, define the comparison window, and avoid claiming causality without evidence.",
-    tone: "technical and precise",
-    format: "short report with recommendation",
-  },
-};
-
 function readState() {
   return Object.fromEntries(
     Object.entries(fields).map(([key, element]) => [key, element.value.trim()])
@@ -103,62 +37,6 @@ function writeState(state) {
   Object.entries(fields).forEach(([key, element]) => {
     element.value = state[key] || "";
   });
-}
-
-function section(title, value) {
-  return value ? `${title}\n${value}` : "";
-}
-
-function buildPrompt(state) {
-  const blocks = [
-    section("Role", state.role || "Helpful AI assistant"),
-    section("Goal", state.goal),
-    section("Audience", state.audience),
-    section("Context", state.context),
-    section("Constraints", state.constraints),
-    section("Tone", state.tone),
-    section("Output format", state.format),
-    section(
-      "Quality bar",
-      "Ask clarifying questions when required. Be specific, actionable, and honest about uncertainty."
-    ),
-  ].filter(Boolean);
-
-  return blocks.join("\n\n");
-}
-
-function scorePrompt(state) {
-  const checks = [
-    {
-      label: "Role is defined",
-      pass: state.role.length >= 6,
-    },
-    {
-      label: "Goal is specific",
-      pass: state.goal.length >= 24,
-    },
-    {
-      label: "Audience is named",
-      pass: state.audience.length >= 4,
-    },
-    {
-      label: "Context gives background",
-      pass: state.context.length >= 36,
-    },
-    {
-      label: "Constraints reduce ambiguity",
-      pass: state.constraints.length >= 24,
-    },
-    {
-      label: "Output format is selected",
-      pass: Boolean(state.format),
-    },
-  ];
-
-  const passed = checks.filter((check) => check.pass).length;
-  const score = Math.round((passed / checks.length) * 100);
-
-  return { checks, score };
 }
 
 function renderChecklist(checks) {
@@ -192,9 +70,9 @@ function updateQuality(score) {
 }
 
 function updateStats(promptText) {
-  const words = promptText.trim().split(/\s+/).filter(Boolean).length;
-  wordCount.textContent = `${words}`;
-  charCount.textContent = `${promptText.length}`;
+  const stats = countPrompt(promptText);
+  wordCount.textContent = `${stats.words}`;
+  charCount.textContent = `${stats.characters}`;
 }
 
 function loadJson(key, fallback) {

@@ -4,16 +4,29 @@ These are ready-to-open GitHub issue drafts for the next maintenance cycle.
 
 ## Add GitHub Pages Demo
 
-Publish the static app with GitHub Pages so users can try AI Prompt Lab without cloning the repository.
+Verify and document the GitHub Pages deployment so users can try AI Prompt Lab without cloning the repository.
 
 Acceptance criteria:
 
-- Pages is enabled for the repository
+- The `Deploy GitHub Pages` workflow succeeds
 - README includes the live demo URL
 - The deployed page loads `index.html`, `styles.css`, and `app.js`
 - Smoke test still passes locally
 
 Suggested labels: `enhancement`, `documentation`
+
+## Establish a Real Maintenance Cadence
+
+Avoid artificial commit history. Build credibility through small, useful updates over time.
+
+Acceptance criteria:
+
+- Ship one small template, test, documentation, or accessibility improvement per maintenance session
+- Keep `CHANGELOG.md` updated for user-facing changes
+- Prefer meaningful commits over commit-count padding
+- Review open roadmap drafts before adding new features
+
+Suggested labels: `maintenance`
 
 ## Add Prompt Preset Import and Export
 
