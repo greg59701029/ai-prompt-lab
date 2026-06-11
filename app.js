@@ -18,6 +18,8 @@ const qualityLabel = document.querySelector("#quality-label");
 const qualityMeter = document.querySelector("#quality-meter");
 const checklist = document.querySelector("#checklist");
 const historyList = document.querySelector("#history-list");
+const wordCount = document.querySelector("#word-count");
+const charCount = document.querySelector("#char-count");
 
 const storageKey = "ai-prompt-lab-state";
 const historyKey = "ai-prompt-lab-history";
@@ -54,6 +56,39 @@ const templates = {
     constraints:
       "Separate facts from assumptions. Flag uncertainty. Keep the final recommendation short.",
     tone: "executive and clear",
+    format: "short report with recommendation",
+  },
+  marketing: {
+    role: "Lifecycle marketing strategist",
+    goal: "Create a focused campaign brief for a product launch.",
+    audience: "Marketing lead preparing copy, channels, and success metrics",
+    context:
+      "The campaign should explain the customer problem, offer, proof points, and launch sequence.",
+    constraints:
+      "Avoid hype. Include target segment, positioning angle, key messages, channels, and measurable outcomes.",
+    tone: "executive and clear",
+    format: "bullet list with clear next steps",
+  },
+  support: {
+    role: "Customer support operations specialist",
+    goal: "Turn a messy customer issue into a clear support response and escalation plan.",
+    audience: "Support agent handling a time-sensitive ticket",
+    context:
+      "The customer needs a practical answer, clear ownership, and a path to resolution.",
+    constraints:
+      "Be empathetic, state what is known, avoid unsupported promises, and list follow-up questions.",
+    tone: "friendly and concise",
+    format: "step-by-step plan",
+  },
+  data: {
+    role: "Product data analyst",
+    goal: "Diagnose a metric movement and identify the most likely drivers.",
+    audience: "Product manager deciding what to investigate next",
+    context:
+      "The answer should separate confirmed evidence from hypotheses and recommend useful follow-up cuts.",
+    constraints:
+      "Call out missing data, define the comparison window, and avoid claiming causality without evidence.",
+    tone: "technical and precise",
     format: "short report with recommendation",
   },
 };
@@ -156,6 +191,12 @@ function updateQuality(score) {
   }
 }
 
+function updateStats(promptText) {
+  const words = promptText.trim().split(/\s+/).filter(Boolean).length;
+  wordCount.textContent = `${words}`;
+  charCount.textContent = `${promptText.length}`;
+}
+
 function loadJson(key, fallback) {
   try {
     return JSON.parse(localStorage.getItem(key)) || fallback;
@@ -223,6 +264,7 @@ function render() {
   output.value = promptText;
   renderChecklist(checks);
   updateQuality(score);
+  updateStats(promptText);
   saveJson(storageKey, state);
   saveStatus.textContent = "Saved";
 }

@@ -257,7 +257,7 @@ textarea {
   display: grid;
   gap: 10px;
   padding: 0;
-  margin: 18px 0 26px;
+  margin: 18px 0;
   list-style: none;
 }
 
@@ -274,6 +274,35 @@ textarea {
 
 .checklist strong {
   color: var(--ink);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 0 0 26px;
+}
+
+.stats-grid div {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: #fbfcfb;
+}
+
+.stats-grid dt {
+  margin-bottom: 5px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.stats-grid dd {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.35rem;
+  font-weight: 850;
 }
 
 .history {

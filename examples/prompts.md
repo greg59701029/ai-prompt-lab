@@ -77,3 +77,78 @@ executive and clear
 Output format
 short report with recommendation
 ```
+
+## Marketing Brief
+
+```text
+Role
+Lifecycle marketing strategist
+
+Goal
+Create a focused campaign brief for a product launch.
+
+Audience
+Marketing lead preparing copy, channels, and success metrics
+
+Context
+The campaign should explain the customer problem, offer, proof points, and launch sequence.
+
+Constraints
+Avoid hype. Include target segment, positioning angle, key messages, channels, and measurable outcomes.
+
+Tone
+executive and clear
+
+Output format
+bullet list with clear next steps
+```
+
+## Support Response
+
+```text
+Role
+Customer support operations specialist
+
+Goal
+Turn a messy customer issue into a clear support response and escalation plan.
+
+Audience
+Support agent handling a time-sensitive ticket
+
+Context
+The customer needs a practical answer, clear ownership, and a path to resolution.
+
+Constraints
+Be empathetic, state what is known, avoid unsupported promises, and list follow-up questions.
+
+Tone
+friendly and concise
+
+Output format
+step-by-step plan
+```
+
+## Data Analysis
+
+```text
+Role
+Product data analyst
+
+Goal
+Diagnose a metric movement and identify the most likely drivers.
+
+Audience
+Product manager deciding what to investigate next
+
+Context
+The answer should separate confirmed evidence from hypotheses and recommend useful follow-up cuts.
+
+Constraints
+Call out missing data, define the comparison window, and avoid claiming causality without evidence.
+
+Tone
+technical and precise
+
+Output format
+short report with recommendation
+```
