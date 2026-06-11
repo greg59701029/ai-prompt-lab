@@ -5,7 +5,9 @@
 - Add editable prompt preset import and export
 - Add a compact mobile toolbar
 - Add a before and after prompt comparison view
-- Add more templates for marketing, support, data analysis, and learning
+- Add a learning template for study plans and tutoring workflows
+- Improve prompt scoring with stronger context and risk checks
+- Publish a GitHub Pages demo
 
 ## Later
 
@@ -19,3 +21,4 @@
 - Keep the static version dependency-free
 - Keep all generated text editable before copying
 - Prefer plain browser APIs over framework dependencies until the app needs more structure
+- Keep new templates model-agnostic and useful across multiple AI assistants

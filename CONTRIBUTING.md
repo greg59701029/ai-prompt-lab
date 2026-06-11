@@ -8,6 +8,7 @@ Thanks for improving AI Prompt Lab.
 - Improve the quality checklist
 - Add a small UI accessibility fix
 - Add examples for real workflows
+- Improve Traditional Chinese documentation
 
 ## Local Check
 
@@ -20,3 +21,5 @@ python tests/smoke_test.py
 - Keep the static app dependency-free unless there is a clear reason
 - Keep templates editable and model-agnostic
 - Include a short explanation when changing scoring behavior
+- Update `examples/prompts.md` when adding a new template
+- Update `CHANGELOG.md` for user-facing changes

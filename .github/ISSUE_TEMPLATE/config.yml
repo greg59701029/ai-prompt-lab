@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Project README
+    url: https://github.com/greg59701029/ai-prompt-lab#readme
+    about: Read the setup and maintenance notes before opening an issue.

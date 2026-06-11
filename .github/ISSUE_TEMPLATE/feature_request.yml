@@ -1,0 +1,35 @@
+name: Feature request
+description: Suggest an improvement or new prompt workflow.
+title: "Feature: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What user problem would this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the smallest useful version of the feature.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Any simpler or related approaches?
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Templates
+        - Quality scoring
+        - Export
+        - Accessibility
+        - Documentation
+        - Other
