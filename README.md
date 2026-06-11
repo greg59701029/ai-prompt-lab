@@ -40,7 +40,8 @@ http://localhost:8080
 |-- examples/
 |   `-- prompts.md
 |-- docs/
-|   `-- maintainer-notes.md
+|   |-- maintainer-notes.md
+|   `-- roadmap-issues.md
 |-- tests/
 |   `-- smoke_test.py
 `-- .github/
