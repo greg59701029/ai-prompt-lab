@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="A lightweight prompt builder for turning rough AI tasks into structured prompts."
+    >
+    <title>AI Prompt Lab</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">AI Prompt Lab</p>
+        <h1>Structured prompt builder</h1>
+      </div>
+      <div class="topbar-actions" aria-label="Prompt actions">
+        <button class="secondary" id="reset-btn" type="button">Reset</button>
+        <button class="secondary" id="download-btn" type="button">Download</button>
+        <button class="primary" id="copy-btn" type="button">Copy</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="panel controls-panel" aria-labelledby="builder-title">
+        <div class="panel-heading">
+          <h2 id="builder-title">Builder</h2>
+          <span class="status-pill" id="save-status">Ready</span>
+        </div>
+
+        <div class="template-row" aria-label="Prompt templates">
+          <button class="template-btn" data-template="product" type="button">Product</button>
+          <button class="template-btn" data-template="code" type="button">Code</button>
+          <button class="template-btn" data-template="research" type="button">Research</button>
+        </div>
+
+        <label>
+          Role
+          <input id="role-input" type="text" placeholder="Senior AI assistant">
+        </label>
+
+        <label>
+          Goal
+          <textarea id="goal-input" rows="3" placeholder="Create a practical answer for..."></textarea>
+        </label>
+
+        <label>
+          Audience
+          <input id="audience-input" type="text" placeholder="Developer, founder, student">
+        </label>
+
+        <label>
+          Context
+          <textarea id="context-input" rows="4" placeholder="Important background, data, links, or constraints"></textarea>
+        </label>
+
+        <label>
+          Constraints
+          <textarea id="constraints-input" rows="3" placeholder="Tone limits, budget, deadline, format rules"></textarea>
+        </label>
+
+        <div class="field-grid">
+          <label>
+            Tone
+            <select id="tone-input">
+              <option value="direct and practical">Direct</option>
+              <option value="friendly and concise">Friendly</option>
+              <option value="technical and precise">Technical</option>
+              <option value="executive and clear">Executive</option>
+            </select>
+          </label>
+
+          <label>
+            Output
+            <select id="format-input">
+              <option value="bullet list with clear next steps">Bullets</option>
+              <option value="step-by-step plan">Step plan</option>
+              <option value="short report with recommendation">Report</option>
+              <option value="working code with explanation">Code</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <section class="panel preview-panel" aria-labelledby="prompt-title">
+        <div class="panel-heading">
+          <h2 id="prompt-title">Prompt</h2>
+          <span class="score-badge" id="score-badge">0</span>
+        </div>
+        <textarea id="prompt-output" readonly spellcheck="false"></textarea>
+      </section>
+
+      <aside class="panel insight-panel" aria-labelledby="insight-title">
+        <div class="panel-heading">
+          <h2 id="insight-title">Quality</h2>
+          <span id="quality-label">Needs detail</span>
+        </div>
+
+        <div class="meter" aria-hidden="true">
+          <div id="quality-meter"></div>
+        </div>
+
+        <ul class="checklist" id="checklist"></ul>
+
+        <div class="history">
+          <h3>Recent prompts</h3>
+          <ol id="history-list"></ol>
+        </div>
+      </aside>
+    </main>
+  </body>
+</html>
