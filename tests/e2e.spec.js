@@ -10,7 +10,7 @@ test("builds prompts from templates and updates quality stats", async ({ page })
 
   await expect(page.getByLabel("Generated prompt")).toHaveValue(/Product data analyst/);
   await expect(page.getByText("Strong")).toBeVisible();
-  await expect(page.getByLabel("Prompt quality")).toHaveAttribute("aria-valuenow", "100");
+  await expect(page.getByRole("meter", { name: "Prompt quality" })).toHaveAttribute("aria-valuenow", "100");
   await expect(page.locator("#word-count")).not.toHaveText("0");
 });
 
