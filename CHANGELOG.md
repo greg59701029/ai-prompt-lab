@@ -2,6 +2,14 @@
 
 All notable changes to AI Prompt Lab are documented here.
 
+## 0.4.0 - 2026-06-13
+
+- Added JSON preset export for saving editable builder state
+- Added JSON preset import with validation and unsupported-field filtering
+- Added a sample preset file under `examples/product-preset.json`
+- Added unit tests for preset serialization, plain-object imports, and invalid input handling
+- Documented the difference between prompt text downloads and preset exports
+
 ## 0.3.0 - 2026-06-12
 
 - Added GitHub Pages deployment workflow

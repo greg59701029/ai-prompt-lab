@@ -17,9 +17,20 @@ https://greg59701029.github.io/ai-prompt-lab/
 - 使用啟發式規則檢查 prompt 的完整度、證據、限制和不確定性處理
 - 顯示字數與字元數
 - 一鍵複製或下載 prompt
+- 匯出 / 匯入 JSON preset，方便保存可再次編輯的 prompt 設定
 - 使用瀏覽器本機儲存最近使用過的 prompt
 
 品質分數是固定規則的 heuristic，不會呼叫 AI 模型，也不代表權威評分；它比較像一份可快速檢查的 prompt checklist。
+
+## Preset
+
+`Download` 會把產生出來的 prompt 存成純文字；`Export preset` 則會把目前表單欄位存成 JSON，之後可以用 `Import preset` 載回來繼續編輯。
+
+範例格式可以看：
+
+```text
+examples/product-preset.json
+```
 
 ## 本機使用
 

@@ -29,6 +29,7 @@ def main():
         "CHANGELOG.md",
         "SECURITY.md",
         "CONTRIBUTING.md",
+        "examples/product-preset.json",
         ".github/ISSUE_TEMPLATE/bug_report.yml",
         ".github/ISSUE_TEMPLATE/feature_request.yml",
         ".github/workflows/pages.yml",
@@ -50,9 +51,13 @@ def main():
     assert_contains(html, 'data-template="data"', "index.html")
     assert_contains(html, 'id="word-count"', "index.html")
     assert_contains(html, 'id="char-count"', "index.html")
+    assert_contains(html, 'id="import-preset-btn"', "index.html")
+    assert_contains(html, 'id="export-preset-btn"', "index.html")
+    assert_contains(html, 'id="preset-file-input"', "index.html")
 
     assert_contains(css, ".workspace", "styles.css")
     assert_contains(css, ".stats-grid", "styles.css")
+    assert_contains(css, ".preset-row", "styles.css")
     assert_contains(css, "@media (max-width: 760px)", "styles.css")
 
     assert_contains(js, "PromptLabCore", "app.js")
@@ -60,9 +65,13 @@ def main():
 
     assert_contains(core, "function buildPrompt", "prompt-core.js")
     assert_contains(core, "function scorePrompt", "prompt-core.js")
+    assert_contains(core, "function serializePreset", "prompt-core.js")
+    assert_contains(core, "function parsePresetJson", "prompt-core.js")
     assert_contains(core, "Success criteria or evidence is mentioned", "prompt-core.js")
     assert_contains(core, "Uncertainty or follow-up is handled", "prompt-core.js")
     assert_contains(js, "function updateStats", "app.js")
+    assert_contains(js, "function exportPreset", "app.js")
+    assert_contains(js, "function importPreset", "app.js")
     assert_contains(core, "Lifecycle marketing strategist", "prompt-core.js")
     assert_contains(core, "Customer support operations specialist", "prompt-core.js")
     assert_contains(core, "Product data analyst", "prompt-core.js")

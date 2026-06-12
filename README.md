@@ -19,6 +19,7 @@ Try the app online:
 - Heuristic prompt quality score with checks for specificity, evidence, constraints, and uncertainty handling
 - Word and character counts for prompt size awareness
 - One-click copy and text download
+- JSON preset import and export for reusable prompt setups
 - Local recent prompt history with browser storage
 - Static deployment friendly for GitHub Pages, Vercel, Netlify, or any web host
 
@@ -45,7 +46,8 @@ http://localhost:8080
 |-- app.js
 |-- prompt-core.js
 |-- examples/
-|   `-- prompts.md
+|   |-- prompts.md
+|   `-- product-preset.json
 |-- docs/
 |   |-- maintainer-notes.md
 |   `-- roadmap-issues.md
@@ -67,6 +69,17 @@ Most prompt examples are either too vague or too tied to a single model. This pr
 The goal is not to replace prompt engineering judgment. It is to make the first draft clearer, more specific, and easier to improve.
 
 The quality score is a deterministic heuristic. It does not call an AI model and should be treated as a checklist-style signal, not as an authoritative evaluation.
+
+## Presets
+
+Use **Export preset** to save the current builder fields as JSON. Use **Import preset** to load that JSON back into the builder later.
+
+Preset export is different from prompt download:
+
+- `Download` saves the generated prompt as plain text.
+- `Export preset` saves the editable builder state as JSON.
+
+See `examples/product-preset.json` for the current preset format.
 
 ## Development
 

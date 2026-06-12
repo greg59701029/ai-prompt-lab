@@ -4,6 +4,8 @@ const {
   buildPrompt,
   scorePrompt,
   countPrompt,
+  parsePresetJson,
+  serializePreset,
 } = require("../prompt-core.js");
 
 function testBuildPrompt() {
@@ -73,9 +75,44 @@ function testPromptStats() {
   assert.strictEqual(stats.characters, prompt.length);
 }
 
+function testPresetSerializationRoundTrip() {
+  const exported = serializePreset(templates.marketing);
+  const parsed = JSON.parse(exported);
+  const preset = parsePresetJson(exported);
+
+  assert.strictEqual(parsed.type, "ai-prompt-lab/preset");
+  assert.strictEqual(parsed.version, 1);
+  assert.strictEqual(preset.role, templates.marketing.role);
+  assert.strictEqual(preset.goal, templates.marketing.goal);
+  assert.strictEqual(preset.format, templates.marketing.format);
+}
+
+function testPresetParserAcceptsPlainObjects() {
+  const preset = parsePresetJson(
+    JSON.stringify({
+      role: "Learning coach",
+      goal: "Create a useful study plan with milestones.",
+      extraField: "ignored",
+    })
+  );
+
+  assert.strictEqual(preset.role, "Learning coach");
+  assert.strictEqual(preset.goal, "Create a useful study plan with milestones.");
+  assert.strictEqual(preset.extraField, undefined);
+}
+
+function testPresetParserRejectsInvalidInput() {
+  assert.throws(() => parsePresetJson("{"), /not valid JSON/);
+  assert.throws(() => parsePresetJson(JSON.stringify({ extraField: "nope" })), /supported/);
+  assert.throws(() => parsePresetJson(JSON.stringify([])), /preset object/);
+}
+
 testBuildPrompt();
 testScoreSeparatesWeakAndStrongPrompts();
 testTemplatesStayUseful();
 testPromptStats();
+testPresetSerializationRoundTrip();
+testPresetParserAcceptsPlainObjects();
+testPresetParserRejectsInvalidInput();
 
 console.log("Prompt core tests passed");

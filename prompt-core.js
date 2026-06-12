@@ -126,6 +126,18 @@
     "uncertainty",
   ];
 
+  const presetType = "ai-prompt-lab/preset";
+  const presetVersion = 1;
+  const presetFields = [
+    "role",
+    "goal",
+    "audience",
+    "context",
+    "constraints",
+    "tone",
+    "format",
+  ];
+
   function normalize(value) {
     return String(value || "").trim();
   }
@@ -217,11 +229,61 @@
     };
   }
 
+  function sanitizePreset(state) {
+    const preset = {};
+
+    presetFields.forEach((field) => {
+      preset[field] = normalize(state && state[field]);
+    });
+
+    return preset;
+  }
+
+  function serializePreset(state) {
+    return JSON.stringify(
+      {
+        type: presetType,
+        version: presetVersion,
+        exportedAt: new Date().toISOString(),
+        preset: sanitizePreset(state),
+      },
+      null,
+      2
+    );
+  }
+
+  function parsePresetJson(jsonText) {
+    let parsed;
+
+    try {
+      parsed = JSON.parse(String(jsonText || ""));
+    } catch {
+      throw new Error("Preset file is not valid JSON.");
+    }
+
+    const candidate = parsed && parsed.preset ? parsed.preset : parsed;
+
+    if (!candidate || typeof candidate !== "object" || Array.isArray(candidate)) {
+      throw new Error("Preset file does not contain a prompt preset object.");
+    }
+
+    const preset = sanitizePreset(candidate);
+    const hasSupportedField = presetFields.some((field) => preset[field]);
+
+    if (!hasSupportedField) {
+      throw new Error("Preset file does not include any supported prompt fields.");
+    }
+
+    return preset;
+  }
+
   const api = {
     templates,
     buildPrompt,
     scorePrompt,
     countPrompt,
+    parsePresetJson,
+    serializePreset,
   };
 
   global.PromptLabCore = api;

@@ -28,16 +28,16 @@ Acceptance criteria:
 
 Suggested labels: `maintenance`
 
-## Add Prompt Preset Import and Export
+## Add Preset Management
 
-Allow users to save reusable prompt presets as JSON and import them later.
+Allow users to manage multiple saved prompt presets inside the browser.
 
 Acceptance criteria:
 
-- Export includes role, goal, audience, context, constraints, tone, and output format
-- Import validates the JSON shape before updating the form
-- Invalid JSON shows a clear status message
-- Smoke test covers import/export UI targets
+- Users can save the current builder state as a named preset
+- Users can load and delete saved presets
+- Existing JSON import/export behavior keeps working
+- Smoke test covers preset management UI targets
 
 Suggested labels: `enhancement`
 

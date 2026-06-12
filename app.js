@@ -9,11 +9,21 @@ const fields = {
 };
 
 const promptCore = window.PromptLabCore;
-const { templates, buildPrompt, scorePrompt, countPrompt } = promptCore;
+const {
+  templates,
+  buildPrompt,
+  scorePrompt,
+  countPrompt,
+  parsePresetJson,
+  serializePreset,
+} = promptCore;
 
 const output = document.querySelector("#prompt-output");
 const copyButton = document.querySelector("#copy-btn");
 const downloadButton = document.querySelector("#download-btn");
+const exportPresetButton = document.querySelector("#export-preset-btn");
+const importPresetButton = document.querySelector("#import-preset-btn");
+const presetFileInput = document.querySelector("#preset-file-input");
 const resetButton = document.querySelector("#reset-btn");
 const saveStatus = document.querySelector("#save-status");
 const scoreBadge = document.querySelector("#score-badge");
@@ -35,7 +45,12 @@ function readState() {
 
 function writeState(state) {
   Object.entries(fields).forEach(([key, element]) => {
-    element.value = state[key] || "";
+    const nextValue = state[key] || "";
+    element.value = nextValue;
+
+    if (element.tagName === "SELECT" && element.value !== nextValue) {
+      element.selectedIndex = 0;
+    }
   });
 }
 
@@ -175,14 +190,43 @@ function downloadPrompt() {
     return;
   }
 
-  const file = new Blob([promptText], { type: "text/plain" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(file);
-  link.download = "ai-prompt.txt";
-  link.click();
-  URL.revokeObjectURL(link.href);
+  downloadText("ai-prompt.txt", promptText, "text/plain");
   saveStatus.textContent = "Downloaded";
   saveHistory(promptText);
+}
+
+function downloadText(filename, text, type) {
+  const file = new Blob([text], { type });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(file);
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(link.href);
+}
+
+function exportPreset() {
+  const presetJson = serializePreset(readState());
+  downloadText("ai-prompt-lab-preset.json", presetJson, "application/json");
+  saveStatus.textContent = "Preset exported";
+}
+
+async function importPreset(file) {
+  if (!file) {
+    return;
+  }
+
+  try {
+    const presetJson = await file.text();
+    const preset = parsePresetJson(presetJson);
+    writeState(preset);
+    render();
+    saveStatus.textContent = "Preset imported";
+  } catch (error) {
+    saveStatus.textContent = "Import failed";
+    console.error(error);
+  } finally {
+    presetFileInput.value = "";
+  }
 }
 
 function resetForm() {
@@ -215,6 +259,9 @@ document.querySelectorAll("[data-template]").forEach((button) => {
 
 copyButton.addEventListener("click", copyPrompt);
 downloadButton.addEventListener("click", downloadPrompt);
+exportPresetButton.addEventListener("click", exportPreset);
+importPresetButton.addEventListener("click", () => presetFileInput.click());
+presetFileInput.addEventListener("change", () => importPreset(presetFileInput.files[0]));
 resetButton.addEventListener("click", resetForm);
 
 writeState(loadJson(storageKey, templates.product));

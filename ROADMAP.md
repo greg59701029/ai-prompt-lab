@@ -2,7 +2,7 @@
 
 ## Near Term
 
-- Add editable prompt preset import and export
+- Add preset management for multiple saved prompt setups
 - Add a compact mobile toolbar
 - Add a before and after prompt comparison view
 - Add a learning template for study plans and tutoring workflows

@@ -78,7 +78,8 @@ h3 {
 }
 
 .topbar-actions,
-.template-row {
+.template-row,
+.preset-row {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -187,8 +188,20 @@ textarea:focus-visible {
   margin-bottom: 16px;
 }
 
+.preset-row {
+  margin-bottom: 16px;
+}
+
 .template-btn {
   flex: 1 1 92px;
+}
+
+.preset-row button {
+  flex: 1 1 140px;
+}
+
+#preset-file-input {
+  display: none;
 }
 
 label {
