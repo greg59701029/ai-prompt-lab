@@ -9,6 +9,10 @@ All notable changes to AI Prompt Lab are documented here.
 - Added a sample preset file under `examples/product-preset.json`
 - Added unit tests for preset serialization, plain-object imports, and invalid input handling
 - Documented the difference between prompt text downloads and preset exports
+- Added README screenshot and status badges
+- Added Playwright E2E coverage for template selection and preset workflows
+- Added accessibility improvements for status announcements, generated prompt labeling, and quality meter semantics
+- Added release notes and issue drafts for the next maintenance cycle
 
 ## 0.3.0 - 2026-06-12
 

@@ -21,8 +21,17 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Install Node dependencies
+        run: npm install --no-package-lock
+
       - name: Run smoke test
         run: python tests/smoke_test.py
 
       - name: Run prompt core tests
-        run: node tests/prompt_core.test.js
+        run: npm run test:unit
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Run end-to-end tests
+        run: npm run test:e2e

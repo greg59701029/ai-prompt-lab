@@ -29,7 +29,7 @@
       <section class="panel controls-panel" aria-labelledby="builder-title">
         <div class="panel-heading">
           <h2 id="builder-title">Builder</h2>
-          <span class="status-pill" id="save-status">Ready</span>
+          <span class="status-pill" id="save-status" role="status" aria-live="polite">Ready</span>
         </div>
 
         <div class="template-row" aria-label="Prompt templates">
@@ -44,7 +44,12 @@
         <div class="preset-row" aria-label="Preset actions">
           <button class="secondary" id="import-preset-btn" type="button">Import preset</button>
           <button class="secondary" id="export-preset-btn" type="button">Export preset</button>
-          <input id="preset-file-input" type="file" accept="application/json,.json">
+          <input
+            id="preset-file-input"
+            type="file"
+            accept="application/json,.json"
+            aria-label="Import preset JSON file"
+          >
         </div>
 
         <label>
@@ -98,9 +103,9 @@
       <section class="panel preview-panel" aria-labelledby="prompt-title">
         <div class="panel-heading">
           <h2 id="prompt-title">Prompt</h2>
-          <span class="score-badge" id="score-badge">0</span>
+          <span class="score-badge" id="score-badge" aria-label="Prompt quality score">0</span>
         </div>
-        <textarea id="prompt-output" readonly spellcheck="false"></textarea>
+        <textarea id="prompt-output" aria-label="Generated prompt" readonly spellcheck="false"></textarea>
       </section>
 
       <aside class="panel insight-panel" aria-labelledby="insight-title">
@@ -109,7 +114,15 @@
           <span id="quality-label">Needs detail</span>
         </div>
 
-        <div class="meter" aria-hidden="true">
+        <div
+          class="meter"
+          id="quality-meter-shell"
+          role="meter"
+          aria-label="Prompt quality"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+        >
           <div id="quality-meter"></div>
         </div>
 

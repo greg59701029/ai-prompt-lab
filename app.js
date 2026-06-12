@@ -29,6 +29,7 @@ const saveStatus = document.querySelector("#save-status");
 const scoreBadge = document.querySelector("#score-badge");
 const qualityLabel = document.querySelector("#quality-label");
 const qualityMeter = document.querySelector("#quality-meter");
+const qualityMeterShell = document.querySelector("#quality-meter-shell");
 const checklist = document.querySelector("#checklist");
 const historyList = document.querySelector("#history-list");
 const wordCount = document.querySelector("#word-count");
@@ -74,6 +75,7 @@ function renderChecklist(checks) {
 function updateQuality(score) {
   scoreBadge.textContent = `${score}`;
   qualityMeter.style.width = `${score}%`;
+  qualityMeterShell.setAttribute("aria-valuenow", `${score}`);
 
   if (score >= 84) {
     qualityLabel.textContent = "Strong";

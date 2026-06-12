@@ -4,13 +4,18 @@ A lightweight browser tool for turning rough AI tasks into structured prompts.
 
 The app runs as a static site with no build step, no API key, and no backend. It is designed for quick prompt drafting, quality checks, and exporting prompts for ChatGPT, Claude, Gemini, Copilot, or any other AI assistant.
 
-![CI](https://github.com/greg59701029/ai-prompt-lab/actions/workflows/ci.yml/badge.svg)
+[![CI](https://github.com/greg59701029/ai-prompt-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/greg59701029/ai-prompt-lab/actions/workflows/ci.yml)
+[![Pages](https://github.com/greg59701029/ai-prompt-lab/actions/workflows/pages.yml/badge.svg)](https://github.com/greg59701029/ai-prompt-lab/actions/workflows/pages.yml)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Version](https://img.shields.io/badge/version-0.4.0-blue)
 
 ## Live Demo
 
 Try the app online:
 
 [Open the live demo](https://greg59701029.github.io/ai-prompt-lab/)
+
+![AI Prompt Lab screenshot](assets/screenshot.png)
 
 ## Features
 
@@ -45,14 +50,21 @@ http://localhost:8080
 |-- styles.css
 |-- app.js
 |-- prompt-core.js
+|-- package.json
+|-- playwright.config.js
+|-- assets/
+|   `-- screenshot.png
 |-- examples/
 |   |-- prompts.md
 |   `-- product-preset.json
 |-- docs/
+|   |-- issue-drafts/
 |   |-- maintainer-notes.md
+|   |-- releases/
 |   `-- roadmap-issues.md
 |-- tests/
 |   |-- smoke_test.py
+|   |-- e2e.spec.js
 |   `-- prompt_core.test.js
 `-- .github/
     |-- ISSUE_TEMPLATE/
@@ -95,7 +107,15 @@ Run the prompt core unit tests:
 node tests/prompt_core.test.js
 ```
 
-The tests verify that the static app includes its core assets, expected UI targets, prompt generation, scoring behavior, template quality, and basic safety checks.
+Run the end-to-end tests:
+
+```bash
+npm install
+npx playwright install --with-deps chromium
+npm run test:e2e
+```
+
+The tests verify that the static app includes its core assets, expected UI targets, prompt generation, scoring behavior, template quality, preset workflows, and basic safety checks.
 
 ## Maintenance
 

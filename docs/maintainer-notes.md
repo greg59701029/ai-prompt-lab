@@ -24,6 +24,7 @@ AI Prompt Lab is intentionally small. The project should remain useful without r
 - Does the change work by opening `index.html` directly?
 - Does the smoke test pass?
 - Do the prompt core unit tests pass in CI?
+- Do E2E tests cover any changed browser workflow?
 - Is the new template editable and model-agnostic?
 - Does the README still describe the current behavior?
 - Does the change avoid storing secrets or sending prompt content externally?

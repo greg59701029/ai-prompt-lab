@@ -23,13 +23,22 @@ def main():
         "styles.css",
         "app.js",
         "prompt-core.js",
+        "package.json",
+        "playwright.config.js",
         "tests/prompt_core.test.js",
+        "tests/e2e.spec.js",
         "README.md",
         "README.zh-TW.md",
         "CHANGELOG.md",
         "SECURITY.md",
         "CONTRIBUTING.md",
+        "assets/screenshot.png",
         "examples/product-preset.json",
+        "docs/releases/v0.4.0.md",
+        "docs/issue-drafts/01-preset-management.md",
+        "docs/issue-drafts/02-prompt-diff-view.md",
+        "docs/issue-drafts/03-learning-template.md",
+        "docs/issue-drafts/04-accessibility-audit.md",
         ".github/ISSUE_TEMPLATE/bug_report.yml",
         ".github/ISSUE_TEMPLATE/feature_request.yml",
         ".github/workflows/pages.yml",
@@ -54,6 +63,10 @@ def main():
     assert_contains(html, 'id="import-preset-btn"', "index.html")
     assert_contains(html, 'id="export-preset-btn"', "index.html")
     assert_contains(html, 'id="preset-file-input"', "index.html")
+    assert_contains(html, 'role="status"', "index.html")
+    assert_contains(html, 'aria-live="polite"', "index.html")
+    assert_contains(html, 'role="meter"', "index.html")
+    assert_contains(html, 'aria-label="Generated prompt"', "index.html")
 
     assert_contains(css, ".workspace", "styles.css")
     assert_contains(css, ".stats-grid", "styles.css")
@@ -72,6 +85,7 @@ def main():
     assert_contains(js, "function updateStats", "app.js")
     assert_contains(js, "function exportPreset", "app.js")
     assert_contains(js, "function importPreset", "app.js")
+    assert_contains(js, "aria-valuenow", "app.js")
     assert_contains(core, "Lifecycle marketing strategist", "prompt-core.js")
     assert_contains(core, "Customer support operations specialist", "prompt-core.js")
     assert_contains(core, "Product data analyst", "prompt-core.js")
