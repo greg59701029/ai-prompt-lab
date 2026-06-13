@@ -103,8 +103,9 @@ function loadJson(key, fallback) {
 function saveJson(key, value) {
   try {
     localStorage.setItem(key, JSON.stringify(value));
+    return true;
   } catch {
-    saveStatus.textContent = "Not saved";
+    return false;
   }
 }
 
@@ -160,8 +161,7 @@ function render() {
   renderChecklist(checks);
   updateQuality(score);
   updateStats(promptText);
-  saveJson(storageKey, state);
-  saveStatus.textContent = "Saved";
+  saveStatus.textContent = saveJson(storageKey, state) ? "Saved" : "Not saved";
 }
 
 async function copyPrompt() {

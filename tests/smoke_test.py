@@ -17,6 +17,7 @@ def main():
     html = read("index.html")
     css = read("styles.css")
     js = read("app.js")
+    readme = read("README.md")
 
     required_files = [
         "index.html",
@@ -32,13 +33,10 @@ def main():
         "CHANGELOG.md",
         "SECURITY.md",
         "CONTRIBUTING.md",
+        "ROADMAP.md",
         "assets/screenshot.png",
         "examples/product-preset.json",
         "docs/releases/v0.4.0.md",
-        "docs/issue-drafts/01-preset-management.md",
-        "docs/issue-drafts/02-prompt-diff-view.md",
-        "docs/issue-drafts/03-learning-template.md",
-        "docs/issue-drafts/04-accessibility-audit.md",
         ".github/ISSUE_TEMPLATE/bug_report.yml",
         ".github/ISSUE_TEMPLATE/feature_request.yml",
         ".github/workflows/pages.yml",
@@ -90,6 +88,10 @@ def main():
     assert_contains(core, "Customer support operations specialist", "prompt-core.js")
     assert_contains(core, "Product data analyst", "prompt-core.js")
     assert_contains(js, "localStorage", "app.js")
+    assert_contains(readme, "This is an early personal project", "README.md")
+    assert_contains(readme, "Known Limitations", "README.md")
+    assert_contains(readme, "Scores prompts with 8 deterministic checks", "README.md")
+    assert_contains(readme, "Example Workflows", "README.md")
 
     disallowed = ["eval(", "new Function(", "document.write("]
     for path, text in [("app.js", js), ("prompt-core.js", core)]:

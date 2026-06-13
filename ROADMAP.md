@@ -1,24 +1,17 @@
 # Roadmap
 
-## Near Term
+This roadmap tracks small changes that make the app more useful in daily use. Larger ideas stay out until the static version feels solid.
 
-- Add preset management for multiple saved prompt setups
-- Add a compact mobile toolbar
-- Add a before and after prompt comparison view
-- Add a learning template for study plans and tutoring workflows
-- Improve prompt scoring with stronger context and risk checks
-- Publish a GitHub Pages demo
+## Open Work
 
-## Later
+- [#1](https://github.com/greg59701029/ai-prompt-lab/issues/1) Save, load, and delete multiple browser presets
+- [#2](https://github.com/greg59701029/ai-prompt-lab/issues/2) Compare a baseline prompt with the current prompt
+- [#3](https://github.com/greg59701029/ai-prompt-lab/issues/3) Add a learning template for study plans and tutoring workflows
+- [#4](https://github.com/greg59701029/ai-prompt-lab/issues/4) Add keyboard and accessibility coverage beyond the first ARIA fixes
 
-- Add optional model response preview with an OpenAI-compatible API endpoint
-- Add prompt version history
-- Add shareable prompt links
-- Add JSON schema export for agent workflows
+## Notes
 
-## Maintenance Notes
-
-- Keep the static version dependency-free
-- Keep all generated text editable before copying
-- Prefer plain browser APIs over framework dependencies until the app needs more structure
-- Keep new templates model-agnostic and useful across multiple AI assistants
+- Keep the app usable by opening `index.html` directly.
+- Keep scoring deterministic and explainable.
+- Do not add account sync or analytics by default.
+- Add tests when a change affects prompt generation, preset parsing, history, import, export, or keyboard behavior.

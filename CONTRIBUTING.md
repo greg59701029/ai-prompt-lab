@@ -1,25 +1,31 @@
 # Contributing
 
-Thanks for improving AI Prompt Lab.
+AI Prompt Lab is a small static app. Changes should stay easy to inspect and easy to run locally.
 
-## Good First Changes
+## Before Changing Code
 
-- Add a new prompt template
-- Improve the quality checklist
-- Add a small UI accessibility fix
-- Add examples for real workflows
-- Improve Traditional Chinese documentation
+- Check the open issue or describe the problem in the commit message.
+- Keep templates model-agnostic.
+- Keep prompt scoring deterministic. If a scoring rule changes, update the tests.
 
-## Local Check
+## Local Checks
 
 ```bash
 python tests/smoke_test.py
+node tests/prompt_core.test.js
+npm run test:e2e
 ```
 
-## Pull Request Notes
+Playwright needs a one-time browser install:
 
-- Keep the static app dependency-free unless there is a clear reason
-- Keep templates editable and model-agnostic
-- Include a short explanation when changing scoring behavior
-- Update `examples/prompts.md` when adding a new template
-- Update `CHANGELOG.md` for user-facing changes
+```bash
+npm install
+npx playwright install --with-deps chromium
+```
+
+## Good Changes
+
+- A real prompt workflow example
+- A small template improvement with before/after behavior
+- A focused accessibility fix
+- A test for preset parsing, scoring, download, import, export, or history behavior

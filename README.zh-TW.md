@@ -1,10 +1,14 @@
 # AI Prompt Lab
 
-AI Prompt Lab 是一個輕量的瀏覽器工具，可以把模糊的 AI 任務整理成更清楚的結構化 prompt。
+AI Prompt Lab 是一個靜態瀏覽器工具，用表單欄位把粗略的 AI 任務整理成可複製、可下載、可匯出 preset 的 prompt。
 
-這個專案是純靜態網頁，不需要 API key、不需要後端，也不需要建置流程。你可以直接打開 `index.html`，或部署到 GitHub Pages、Vercel、Netlify 等靜態網站服務。
+## 狀態
 
-## 線上 Demo
+這是早期個人專案。它目前可以當作靜態 prompt builder 使用，但分數規則只是簡單 heuristic，不應該被當成真正的 AI 評分系統。
+
+這個工具沒有後端。prompt 內容、preset、最近使用紀錄都留在瀏覽器內，除非你自己複製、下載或匯出。
+
+## Demo
 
 ```text
 https://greg59701029.github.io/ai-prompt-lab/
@@ -12,27 +16,23 @@ https://greg59701029.github.io/ai-prompt-lab/
 
 ![AI Prompt Lab screenshot](assets/screenshot.png)
 
-## 功能
+## 目前功能
 
-- 依照角色、目標、受眾、背景、限制、語氣和輸出格式建立 prompt
-- 內建產品規劃、程式開發、研究摘要、行銷企劃、客服回覆和資料分析模板
-- 使用啟發式規則檢查 prompt 的完整度、證據、限制和不確定性處理
-- 顯示字數與字元數
-- 一鍵複製或下載 prompt
-- 匯出 / 匯入 JSON preset，方便保存可再次編輯的 prompt 設定
-- 使用瀏覽器本機儲存最近使用過的 prompt
+- 完全在瀏覽器內執行，不需要 API key
+- 用角色、目標、受眾、背景、限制、語氣、輸出格式建立 prompt
+- 內建產品規劃、程式任務、研究摘要、行銷簡報、客服回覆、資料分析模板
+- 用 8 個固定規則檢查 prompt：角色、目標、受眾、背景、限制、格式、證據、不確定性
+- 匯出可再次編輯的 JSON preset
+- 下載產生的 prompt 文字檔
+- 用 `localStorage` 保存最近 5 個複製或下載過的 prompt
 
-品質分數是固定規則的 heuristic，不會呼叫 AI 模型，也不代表權威評分；它比較像一份可快速檢查的 prompt checklist。
+## 已知限制
 
-## Preset
-
-`Download` 會把產生出來的 prompt 存成純文字；`Export preset` 則會把目前表單欄位存成 JSON，之後可以用 `Import preset` 載回來繼續編輯。
-
-範例格式可以看：
-
-```text
-examples/product-preset.json
-```
+- prompt 分數是 rule-based，可能漏掉好 prompt，也可能獎勵冗長 prompt。
+- 最近紀錄只存在 `localStorage`。
+- 沒有同步、帳號系統或後端。
+- preset 匯入只驗證支援欄位，不判斷語意品質。
+- 目前模板只是起點，不是特定模型的最佳實務。
 
 ## 本機使用
 
@@ -40,31 +40,37 @@ examples/product-preset.json
 python -m http.server 8080
 ```
 
-接著開啟：
+然後開啟：
 
 ```text
 http://localhost:8080
 ```
 
-也可以直接用瀏覽器開啟 `index.html`。
+也可以直接用瀏覽器開 `index.html`。
 
-## 開發與測試
+## 測試
 
 ```bash
 python tests/smoke_test.py
+node tests/prompt_core.test.js
+npm run test:e2e
 ```
 
-測試會確認核心檔案、UI 目標、模板、統計功能和基本安全檢查是否存在。
+如果要跑 Playwright E2E，先執行：
 
-## 維護方向
+```bash
+npm install
+npx playwright install --with-deps chromium
+```
 
-這個專案保持小型、容易理解、無依賴。未來優先改進：
+## Roadmap
 
-- 更多實用 prompt 模板
-- 更好的 prompt 品質檢查
-- 匯入與匯出模板
-- prompt 差異比較
-- GitHub Pages 線上展示
+目前下一步直接追蹤在 GitHub issues：
+
+- #1 preset 管理
+- #2 prompt diff view
+- #3 learning prompt template
+- #4 accessibility coverage
 
 ## 授權
 

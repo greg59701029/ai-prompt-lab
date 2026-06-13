@@ -45,6 +45,43 @@ function testScoreSeparatesWeakAndStrongPrompts() {
   );
 }
 
+function testEmptyPromptStaysLowScoring() {
+  const prompt = buildPrompt({});
+  const score = scorePrompt({});
+
+  assert.match(prompt, /^Role\nHelpful AI assistant/m);
+  assert.match(prompt, /Quality bar\nAsk clarifying questions/m);
+  assert.strictEqual(score.score, 0);
+  assert.ok(score.checks.every((check) => !check.pass));
+}
+
+function testVerbosePromptDoesNotAutomaticallyPass() {
+  const verbose = scorePrompt({
+    role: "Helpful planning assistant",
+    goal:
+      "Create a detailed plan for improving a small browser tool with several sections and many implementation notes.",
+    audience: "Solo maintainer",
+    context:
+      "The project is already deployed and the maintainer wants a careful next step without changing the whole architecture.",
+    constraints:
+      "Include implementation details, avoid unrelated rewrites, and keep the output focused on the current repository.",
+    tone: "direct and practical",
+    format: "bullet list with clear next steps",
+  });
+
+  assert.ok(verbose.score < 100, `Expected verbose score below 100, got ${verbose.score}`);
+  assert.ok(
+    verbose.checks.some(
+      (check) => check.label === "Success criteria or evidence is mentioned" && !check.pass
+    )
+  );
+  assert.ok(
+    verbose.checks.some(
+      (check) => check.label === "Uncertainty or follow-up is handled" && !check.pass
+    )
+  );
+}
+
 function testTemplatesStayUseful() {
   const expectedTemplates = [
     "product",
@@ -104,11 +141,14 @@ function testPresetParserAcceptsPlainObjects() {
 function testPresetParserRejectsInvalidInput() {
   assert.throws(() => parsePresetJson("{"), /not valid JSON/);
   assert.throws(() => parsePresetJson(JSON.stringify({ extraField: "nope" })), /supported/);
+  assert.throws(() => parsePresetJson(JSON.stringify({ role: "   " })), /supported/);
   assert.throws(() => parsePresetJson(JSON.stringify([])), /preset object/);
 }
 
 testBuildPrompt();
 testScoreSeparatesWeakAndStrongPrompts();
+testEmptyPromptStaysLowScoring();
+testVerbosePromptDoesNotAutomaticallyPass();
 testTemplatesStayUseful();
 testPromptStats();
 testPresetSerializationRoundTrip();

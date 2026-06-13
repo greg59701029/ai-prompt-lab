@@ -2,6 +2,14 @@
 
 All notable changes to AI Prompt Lab are documented here.
 
+## Unreleased
+
+- Reworked README language to describe current status, known limitations, and real example workflows
+- Removed publishing, profile, and issue-draft documents that were no longer useful after the repository went live
+- Repaired the Traditional Chinese README
+- Fixed the save status shown when browser storage is unavailable
+- Added behavior-focused tests for verbose prompt scoring, empty prompt scoring, invalid preset import, prompt download, and local storage failure
+
 ## 0.4.0 - 2026-06-13
 
 - Added JSON preset export for saving editable builder state
@@ -12,7 +20,7 @@ All notable changes to AI Prompt Lab are documented here.
 - Added README screenshot and status badges
 - Added Playwright E2E coverage for template selection and preset workflows
 - Added accessibility improvements for status announcements, generated prompt labeling, and quality meter semantics
-- Added release notes and issue drafts for the next maintenance cycle
+- Added release notes for v0.4.0
 
 ## 0.3.0 - 2026-06-12
 

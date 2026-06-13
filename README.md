@@ -1,86 +1,103 @@
 # AI Prompt Lab
 
-A lightweight browser tool for turning rough AI tasks into structured prompts.
-
-The app runs as a static site with no build step, no API key, and no backend. It is designed for quick prompt drafting, quality checks, and exporting prompts for ChatGPT, Claude, Gemini, Copilot, or any other AI assistant.
+Static browser prompt builder for drafting AI prompts with editable fields, local JSON presets, and deterministic checklist scoring.
 
 [![CI](https://github.com/greg59701029/ai-prompt-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/greg59701029/ai-prompt-lab/actions/workflows/ci.yml)
 [![Pages](https://github.com/greg59701029/ai-prompt-lab/actions/workflows/pages.yml/badge.svg)](https://github.com/greg59701029/ai-prompt-lab/actions/workflows/pages.yml)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Version](https://img.shields.io/badge/version-0.4.0-blue)
 
-## Live Demo
+## Status
 
-Try the app online:
+This is an early personal project. It currently works as a static prompt builder, but the scoring rules are simple heuristics and should not be treated as a real AI evaluation system.
+
+The app has no backend. Prompt content, presets, and recent history stay in the browser unless you copy, download, or export them yourself.
+
+## Live Demo
 
 [Open the live demo](https://greg59701029.github.io/ai-prompt-lab/)
 
 ![AI Prompt Lab screenshot](assets/screenshot.png)
 
-## Features
+## What It Does
 
-- Structured prompt builder for role, goal, audience, context, constraints, tone, and output format
-- Templates for product planning, coding tasks, research summaries, marketing briefs, support responses, and data analysis
-- Heuristic prompt quality score with checks for specificity, evidence, constraints, and uncertainty handling
-- Word and character counts for prompt size awareness
-- One-click copy and text download
-- JSON preset import and export for reusable prompt setups
-- Local recent prompt history with browser storage
-- Static deployment friendly for GitHub Pages, Vercel, Netlify, or any web host
+- Runs entirely in the browser with no API key
+- Builds prompts from role, goal, audience, context, constraints, tone, and output format fields
+- Includes templates for product planning, coding tasks, research summaries, marketing briefs, support responses, and data analysis
+- Scores prompts with 8 deterministic checks for role, goal, audience, context, constraints, format, evidence, and uncertainty
+- Exports editable presets as JSON
+- Downloads generated prompts as plain text
+- Stores the last 5 copied or downloaded prompts in `localStorage`
 
-## Demo
+## Known Limitations
 
-Use the live demo above, open `index.html` in a browser, or run a local server:
+- The prompt score is rule-based and can miss good prompts or reward verbose prompts.
+- Recent history is stored only in `localStorage`.
+- There is no sync, account system, or backend.
+- Preset import only validates supported fields, not semantic quality.
+- The templates are starting points, not model-specific best practices.
 
-```bash
-python -m http.server 8080
-```
+## Example Workflows
 
-Then visit:
+### Product Planning
 
-```text
-http://localhost:8080
-```
-
-## Project Structure
+Input:
 
 ```text
-.
-|-- index.html
-|-- styles.css
-|-- app.js
-|-- prompt-core.js
-|-- package.json
-|-- playwright.config.js
-|-- assets/
-|   `-- screenshot.png
-|-- examples/
-|   |-- prompts.md
-|   `-- product-preset.json
-|-- docs/
-|   |-- issue-drafts/
-|   |-- maintainer-notes.md
-|   |-- releases/
-|   `-- roadmap-issues.md
-|-- tests/
-|   |-- smoke_test.py
-|   |-- e2e.spec.js
-|   `-- prompt_core.test.js
-`-- .github/
-    |-- ISSUE_TEMPLATE/
-    |-- PULL_REQUEST_TEMPLATE.md
-    `-- workflows/
-        |-- ci.yml
-        `-- pages.yml
+Help me plan a landing page for a small SaaS product.
 ```
 
-## Why This Exists
+Generated prompt excerpt:
 
-Most prompt examples are either too vague or too tied to a single model. This project focuses on a reusable structure that helps users define the task, context, constraints, and output format before sending a prompt to an AI system.
+```text
+Role
+Senior product strategist
 
-The goal is not to replace prompt engineering judgment. It is to make the first draft clearer, more specific, and easier to improve.
+Goal
+Turn a rough product idea into a clear MVP plan with priorities.
 
-The quality score is a deterministic heuristic. It does not call an AI model and should be treated as a checklist-style signal, not as an authoritative evaluation.
+Constraints
+Avoid vague advice. Include risks, assumptions, and a simple validation step.
+```
+
+### Coding Task
+
+Input:
+
+```text
+Break a small browser app into implementation steps and tests.
+```
+
+Generated prompt excerpt:
+
+```text
+Role
+Senior software engineer
+
+Goal
+Review the implementation plan and produce a practical coding task breakdown.
+
+Output format
+working code with explanation
+```
+
+### Support Response
+
+Input:
+
+```text
+Turn a messy customer complaint into a clear reply and escalation plan.
+```
+
+Generated prompt excerpt:
+
+```text
+Role
+Customer support operations specialist
+
+Constraints
+Be empathetic, state what is known, avoid unsupported promises, and list follow-up questions.
+```
 
 ## Presets
 
@@ -101,13 +118,13 @@ Run the smoke test:
 python tests/smoke_test.py
 ```
 
-Run the prompt core unit tests:
+Run prompt core unit tests:
 
 ```bash
 node tests/prompt_core.test.js
 ```
 
-Run the end-to-end tests:
+Run browser tests:
 
 ```bash
 npm install
@@ -115,32 +132,45 @@ npx playwright install --with-deps chromium
 npm run test:e2e
 ```
 
-The tests verify that the static app includes its core assets, expected UI targets, prompt generation, scoring behavior, template quality, preset workflows, and basic safety checks.
+The browser tests cover template selection, prompt download, invalid preset import, local storage failure, and preset export.
 
-## Maintenance
+## Project Structure
 
-This project is intentionally small and dependency-free. Maintenance focuses on:
-
-- adding practical prompt templates
-- improving the scoring checklist
-- keeping the UI accessible on mobile and desktop
-- documenting examples clearly enough for new contributors
-- keeping the GitHub Pages demo working
-
-## Deploy to GitHub Pages
-
-1. Push this repository to GitHub.
-2. Open the repository settings.
-3. Go to **Pages**.
-4. Select the `main` branch and `/root`.
-5. Save and wait for the Pages URL.
+```text
+.
+|-- index.html
+|-- styles.css
+|-- app.js
+|-- prompt-core.js
+|-- package.json
+|-- playwright.config.js
+|-- assets/
+|   `-- screenshot.png
+|-- examples/
+|   |-- prompts.md
+|   `-- product-preset.json
+|-- docs/
+|   `-- releases/
+|-- tests/
+|   |-- smoke_test.py
+|   |-- e2e.spec.js
+|   `-- prompt_core.test.js
+`-- .github/
+    |-- ISSUE_TEMPLATE/
+    |-- PULL_REQUEST_TEMPLATE.md
+    `-- workflows/
+        |-- ci.yml
+        `-- pages.yml
+```
 
 ## Roadmap
 
-- Add import and export for reusable prompt presets
-- Add a small prompt diff view
-- Add optional OpenAI-compatible API preview mode
-- Add keyboard shortcuts for power users
+The current work is tracked in GitHub issues:
+
+- [#1 Add preset management for saved prompt setups](https://github.com/greg59701029/ai-prompt-lab/issues/1)
+- [#2 Add before and after prompt diff view](https://github.com/greg59701029/ai-prompt-lab/issues/2)
+- [#3 Add learning prompt template](https://github.com/greg59701029/ai-prompt-lab/issues/3)
+- [#4 Improve accessibility coverage](https://github.com/greg59701029/ai-prompt-lab/issues/4)
 
 ## License
 

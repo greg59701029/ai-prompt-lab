@@ -2,7 +2,7 @@
   "name": "ai-prompt-lab",
   "version": "0.4.0",
   "private": true,
-  "description": "A lightweight browser tool for turning rough AI tasks into structured prompts.",
+  "description": "Static browser prompt builder with local JSON presets.",
   "scripts": {
     "test:unit": "node tests/prompt_core.test.js",
     "test:e2e": "playwright test tests/e2e.spec.js"
