@@ -81,7 +81,7 @@ test("supports keyboard workflow for template, copy, import, and export", async 
 test("quality checklist exposes text state instead of color alone", async ({ page }) => {
   await page.goto("/");
 
-  await page.getByRole("button", { name: "Reset" }).click();
+  await page.getByRole("button", { name: "Reset", exact: true }).click();
 
   await expect(page.getByLabel("Prompt quality checklist")).toBeVisible();
   await expect(page.locator("#checklist li[data-status='missing']")).toHaveCount(7);
