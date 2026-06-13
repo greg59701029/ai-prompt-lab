@@ -13,6 +13,10 @@ This is an early personal project. It currently works as a static prompt builder
 
 The app has no backend. Prompt content, presets, and recent history stay in the browser unless you copy, download, or export them yourself.
 
+## Current Version
+
+v0.4.0 is the first usable static version. The next small release focuses on one new template, preset management, and accessibility coverage.
+
 ## Live Demo
 
 [Open the live demo](https://greg59701029.github.io/ai-prompt-lab/)
@@ -23,7 +27,7 @@ The app has no backend. Prompt content, presets, and recent history stay in the 
 
 - Runs entirely in the browser with no API key
 - Builds prompts from role, goal, audience, context, constraints, tone, and output format fields
-- Includes templates for product planning, coding tasks, research summaries, marketing briefs, support responses, and data analysis
+- Includes templates for product planning, coding tasks, research summaries, marketing briefs, support responses, data analysis, and learning plans
 - Scores prompts with 8 deterministic checks for role, goal, audience, context, constraints, format, evidence, and uncertainty
 - Exports editable presets as JSON
 - Downloads generated prompts as plain text

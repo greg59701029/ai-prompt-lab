@@ -9,6 +9,7 @@ All notable changes to AI Prompt Lab are documented here.
 - Repaired the Traditional Chinese README
 - Fixed the save status shown when browser storage is unavailable
 - Added behavior-focused tests for verbose prompt scoring, empty prompt scoring, invalid preset import, prompt download, and local storage failure
+- Added a learning prompt template for study plans and interview preparation
 
 ## 0.4.0 - 2026-06-13
 
