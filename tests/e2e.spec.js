@@ -97,6 +97,27 @@ test("quality checklist exposes text state instead of color alone", async ({ pag
   );
 });
 
+test("captures a prompt baseline and shows changed lines", async ({ page }) => {
+  await page.goto("/");
+
+  await page.getByRole("button", { name: "Capture baseline" }).click();
+
+  await expect(page.getByRole("status")).toHaveText("Baseline captured");
+  await expect(page.locator("#diff-summary")).toHaveText("No line changes");
+  await expect(page.getByLabel("Prompt changes")).toContainText(
+    "No line changes since the captured baseline."
+  );
+
+  await page
+    .locator("#constraints-input")
+    .fill("Include measurable outcomes, risks, and two validation steps.");
+
+  await expect(page.locator("#diff-summary")).toHaveText("1 changed line");
+  await expect(page.locator("#prompt-diff li[data-change='changed']")).toHaveCount(1);
+  await expect(page.getByLabel("Prompt changes")).toContainText("Changed");
+  await expect(page.getByLabel("Prompt changes")).toContainText("two validation steps");
+});
+
 test("downloads prompt text and records local history", async ({ page }) => {
   await page.goto("/");
 
