@@ -90,6 +90,7 @@ function testTemplatesStayUseful() {
     "marketing",
     "support",
     "data",
+    "learning",
   ];
 
   assert.deepStrictEqual(Object.keys(templates), expectedTemplates);
@@ -102,6 +103,17 @@ function testTemplatesStayUseful() {
     assert.ok(prompt.includes("Goal\n"), `${name} prompt is missing goal`);
     assert.ok(score.score >= 85, `${name} template score is too low: ${score.score}`);
   }
+}
+
+function testLearningTemplateCoversStudyPlanning() {
+  const prompt = buildPrompt(templates.learning);
+  const score = scorePrompt(templates.learning);
+
+  assert.match(prompt, /Learning coach/);
+  assert.match(prompt, /four-week study plan/);
+  assert.match(prompt, /practice tasks/);
+  assert.match(prompt, /review checkpoints/);
+  assert.ok(score.score >= 85, `Expected learning score at least 85, got ${score.score}`);
 }
 
 function testPromptStats() {
@@ -150,6 +162,7 @@ testScoreSeparatesWeakAndStrongPrompts();
 testEmptyPromptStaysLowScoring();
 testVerbosePromptDoesNotAutomaticallyPass();
 testTemplatesStayUseful();
+testLearningTemplateCoversStudyPlanning();
 testPromptStats();
 testPresetSerializationRoundTrip();
 testPresetParserAcceptsPlainObjects();

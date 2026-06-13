@@ -152,3 +152,28 @@ technical and precise
 Output format
 short report with recommendation
 ```
+
+## Learning Plan
+
+```text
+Role
+Learning coach
+
+Goal
+Create a four-week study plan with milestones, practice tasks, and review checkpoints.
+
+Audience
+Student preparing for a technical interview
+
+Context
+The learner has limited daily study time and needs a plan that separates concepts, practice, and review.
+
+Constraints
+Include measurable outcomes, weekly checkpoints, follow-up questions, risks, and adjustments for missing background knowledge.
+
+Tone
+friendly and concise
+
+Output format
+step-by-step plan
+```

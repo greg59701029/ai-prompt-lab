@@ -66,6 +66,18 @@
       tone: "technical and precise",
       format: "short report with recommendation",
     },
+    learning: {
+      role: "Learning coach",
+      goal:
+        "Create a four-week study plan with milestones, practice tasks, and review checkpoints.",
+      audience: "Student preparing for a technical interview",
+      context:
+        "The learner has limited daily study time and needs a plan that separates concepts, practice, and review.",
+      constraints:
+        "Include measurable outcomes, weekly checkpoints, follow-up questions, risks, and adjustments for missing background knowledge.",
+      tone: "friendly and concise",
+      format: "step-by-step plan",
+    },
   };
 
   const actionWords = [
