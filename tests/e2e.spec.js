@@ -39,12 +39,14 @@ test("supports keyboard workflow for template, copy, import, and export", async 
   });
   await page.goto("/");
 
-  await tabTo(page, page.getByRole("button", { name: "Copy" }));
-  await page.keyboard.press("Enter");
+  const copyButton = page.getByRole("button", { name: "Copy" });
+  await tabTo(page, copyButton);
+  await copyButton.press("Enter");
   await expect(page.getByRole("status")).toHaveText("Copied");
 
-  await tabTo(page, page.getByRole("button", { name: "Learning" }));
-  await page.keyboard.press("Enter");
+  const learningButton = page.getByRole("button", { name: "Learning" });
+  await tabTo(page, learningButton);
+  await learningButton.press("Enter");
   await expect(page.getByRole("status")).toHaveText("Learning template");
   await expect(page.getByLabel("Generated prompt")).toHaveValue(/Learning coach/);
 
@@ -62,17 +64,19 @@ test("supports keyboard workflow for template, copy, import, and export", async 
     })
   );
 
-  await tabTo(page, page.getByRole("button", { name: "Import preset" }));
+  const importPresetButton = page.getByRole("button", { name: "Import preset" });
+  await tabTo(page, importPresetButton);
   const fileChooserPromise = page.waitForEvent("filechooser");
-  await page.keyboard.press("Enter");
+  await importPresetButton.press("Enter");
   const fileChooser = await fileChooserPromise;
   await fileChooser.setFiles(presetPath);
   await expect(page.getByRole("status")).toHaveText("Preset imported");
   await expect(page.locator("#role-input")).toHaveValue("Keyboard tester");
 
-  await tabTo(page, page.getByRole("button", { name: "Export preset" }));
+  const exportPresetButton = page.getByRole("button", { name: "Export preset" });
+  await tabTo(page, exportPresetButton);
   const downloadPromise = page.waitForEvent("download");
-  await page.keyboard.press("Enter");
+  await exportPresetButton.press("Enter");
   const download = await downloadPromise;
 
   expect(download.suggestedFilename()).toBe("ai-prompt-lab-preset.json");
