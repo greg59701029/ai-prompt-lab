@@ -62,10 +62,13 @@ function renderChecklist(checks) {
     const item = document.createElement("li");
     const label = document.createElement("strong");
     const status = document.createElement("span");
+    const statusText = check.pass ? "OK" : "Missing";
 
     label.textContent = check.label;
-    status.textContent = check.pass ? "OK" : "Missing";
-    status.style.color = check.pass ? "var(--green-dark)" : "var(--rose)";
+    status.textContent = statusText;
+    status.className = `check-state ${check.pass ? "pass" : "missing"}`;
+    status.setAttribute("aria-label", statusText);
+    item.setAttribute("data-status", check.pass ? "pass" : "missing");
 
     item.append(label, status);
     checklist.append(item);

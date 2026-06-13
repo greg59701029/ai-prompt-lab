@@ -289,6 +289,19 @@ textarea {
   color: var(--ink);
 }
 
+.check-state {
+  flex: 0 0 auto;
+  font-weight: 800;
+}
+
+.check-state.pass {
+  color: var(--green-dark);
+}
+
+.check-state.missing {
+  color: var(--rose);
+}
+
 .stats-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
