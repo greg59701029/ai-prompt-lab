@@ -66,10 +66,12 @@ def main():
     assert_contains(html, 'aria-live="polite"', "index.html")
     assert_contains(html, 'role="meter"', "index.html")
     assert_contains(html, 'aria-label="Generated prompt"', "index.html")
+    assert_contains(html, 'aria-label="Prompt quality checklist"', "index.html")
 
     assert_contains(css, ".workspace", "styles.css")
     assert_contains(css, ".stats-grid", "styles.css")
     assert_contains(css, ".preset-row", "styles.css")
+    assert_contains(css, ".check-state", "styles.css")
     assert_contains(css, "@media (max-width: 760px)", "styles.css")
 
     assert_contains(js, "PromptLabCore", "app.js")
@@ -85,6 +87,8 @@ def main():
     assert_contains(js, "function exportPreset", "app.js")
     assert_contains(js, "function importPreset", "app.js")
     assert_contains(js, "aria-valuenow", "app.js")
+    assert_contains(js, "data-status", "app.js")
+    assert_contains(js, "aria-label", "app.js")
     assert_contains(core, "Lifecycle marketing strategist", "prompt-core.js")
     assert_contains(core, "Customer support operations specialist", "prompt-core.js")
     assert_contains(core, "Product data analyst", "prompt-core.js")

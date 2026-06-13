@@ -29,3 +29,10 @@ npx playwright install --with-deps chromium
 - A small template improvement with before/after behavior
 - A focused accessibility fix
 - A test for preset parsing, scoring, download, import, export, or history behavior
+
+## Accessibility Checks
+
+- Keyboard users should be able to reach template and prompt action controls.
+- Status updates should keep using the `role="status"` live region.
+- Checklist state should use visible text such as `OK` or `Missing`, not color alone.
+- Browser workflow changes should include a Playwright test when practical.

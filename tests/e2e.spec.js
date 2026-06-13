@@ -3,6 +3,19 @@ const os = require("os");
 const path = require("path");
 const { expect, test } = require("@playwright/test");
 
+async function tabTo(page, locator, maxTabs = 30) {
+  for (let index = 0; index < maxTabs; index += 1) {
+    await page.keyboard.press("Tab");
+    const isFocused = await locator.evaluate((element) => element === document.activeElement);
+
+    if (isFocused) {
+      return;
+    }
+  }
+
+  throw new Error(`Could not tab to ${locator}`);
+}
+
 test("builds prompts from templates and updates quality stats", async ({ page }) => {
   await page.goto("/");
 
@@ -15,6 +28,69 @@ test("builds prompts from templates and updates quality stats", async ({ page })
     "100"
   );
   await expect(page.locator("#word-count")).not.toHaveText("0");
+});
+
+test("supports keyboard workflow for template, copy, import, and export", async ({
+  context,
+  page,
+}) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"], {
+    origin: "http://127.0.0.1:4173",
+  });
+  await page.goto("/");
+
+  await tabTo(page, page.getByRole("button", { name: "Copy" }));
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("status")).toHaveText("Copied");
+
+  await tabTo(page, page.getByRole("button", { name: "Learning" }));
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("status")).toHaveText("Learning template");
+  await expect(page.getByLabel("Generated prompt")).toHaveValue(/Learning coach/);
+
+  const presetPath = path.join(os.tmpdir(), `ai-prompt-lab-keyboard-${Date.now()}.json`);
+  fs.writeFileSync(
+    presetPath,
+    JSON.stringify({
+      role: "Keyboard tester",
+      goal: "Check keyboard-only preset import with a measurable result.",
+      audience: "Maintainer testing accessibility workflows",
+      context: "The test should prove that the visible import button can open the file picker.",
+      constraints: "Include follow-up questions and call out missing evidence.",
+      tone: "technical and precise",
+      format: "short report with recommendation",
+    })
+  );
+
+  await tabTo(page, page.getByRole("button", { name: "Import preset" }));
+  const fileChooserPromise = page.waitForEvent("filechooser");
+  await page.keyboard.press("Enter");
+  const fileChooser = await fileChooserPromise;
+  await fileChooser.setFiles(presetPath);
+  await expect(page.getByRole("status")).toHaveText("Preset imported");
+  await expect(page.locator("#role-input")).toHaveValue("Keyboard tester");
+
+  await tabTo(page, page.getByRole("button", { name: "Export preset" }));
+  const downloadPromise = page.waitForEvent("download");
+  await page.keyboard.press("Enter");
+  const download = await downloadPromise;
+
+  expect(download.suggestedFilename()).toBe("ai-prompt-lab-preset.json");
+});
+
+test("quality checklist exposes text state instead of color alone", async ({ page }) => {
+  await page.goto("/");
+
+  await page.getByRole("button", { name: "Reset" }).click();
+
+  await expect(page.getByLabel("Prompt quality checklist")).toBeVisible();
+  await expect(page.locator("#checklist li[data-status='missing']")).toHaveCount(7);
+  await expect(page.locator("#checklist li[data-status='pass']")).toHaveCount(1);
+  await expect(page.locator("#checklist .check-state").first()).toHaveText("Missing");
+  await expect(page.locator("#checklist .check-state").first()).toHaveAttribute(
+    "aria-label",
+    "Missing"
+  );
 });
 
 test("downloads prompt text and records local history", async ({ page }) => {
