@@ -11,6 +11,7 @@ All notable changes to AI Prompt Lab are documented here.
 - Added behavior-focused tests for verbose prompt scoring, empty prompt scoring, invalid preset import, prompt download, and local storage failure
 - Added a learning prompt template for study plans and interview preparation
 - Added keyboard workflow and checklist state coverage for accessibility
+- Added a baseline prompt diff view for comparing changed lines
 
 ## 0.4.0 - 2026-06-13
 

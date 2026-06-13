@@ -107,6 +107,11 @@
           <span class="score-badge" id="score-badge" aria-label="Prompt quality score">0</span>
         </div>
         <textarea id="prompt-output" aria-label="Generated prompt" readonly spellcheck="false"></textarea>
+        <div class="diff-tools" aria-label="Prompt comparison actions">
+          <button class="secondary" id="capture-baseline-btn" type="button">Capture baseline</button>
+          <span id="diff-summary" aria-live="polite">No baseline captured</span>
+        </div>
+        <ol class="diff-list" id="prompt-diff" aria-label="Prompt changes"></ol>
       </section>
 
       <aside class="panel insight-panel" aria-labelledby="insight-title">

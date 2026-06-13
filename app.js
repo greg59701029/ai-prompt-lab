@@ -21,6 +21,7 @@ const {
 const output = document.querySelector("#prompt-output");
 const copyButton = document.querySelector("#copy-btn");
 const downloadButton = document.querySelector("#download-btn");
+const captureBaselineButton = document.querySelector("#capture-baseline-btn");
 const exportPresetButton = document.querySelector("#export-preset-btn");
 const importPresetButton = document.querySelector("#import-preset-btn");
 const presetFileInput = document.querySelector("#preset-file-input");
@@ -34,9 +35,12 @@ const checklist = document.querySelector("#checklist");
 const historyList = document.querySelector("#history-list");
 const wordCount = document.querySelector("#word-count");
 const charCount = document.querySelector("#char-count");
+const diffSummary = document.querySelector("#diff-summary");
+const diffList = document.querySelector("#prompt-diff");
 
 const storageKey = "ai-prompt-lab-state";
 const historyKey = "ai-prompt-lab-history";
+let promptBaseline = "";
 
 function readState() {
   return Object.fromEntries(
@@ -93,6 +97,93 @@ function updateStats(promptText) {
   const stats = countPrompt(promptText);
   wordCount.textContent = `${stats.words}`;
   charCount.textContent = `${stats.characters}`;
+}
+
+function splitPromptLines(promptText) {
+  return String(promptText || "").split(/\r?\n/);
+}
+
+function changeLabel(changeType) {
+  return changeType.charAt(0).toUpperCase() + changeType.slice(1);
+}
+
+function renderEmptyDiff(message) {
+  const item = document.createElement("li");
+  item.className = "diff-empty";
+  item.textContent = message;
+  diffList.append(item);
+}
+
+function renderDiff(promptText = output.value) {
+  diffList.replaceChildren();
+
+  if (!promptBaseline) {
+    diffSummary.textContent = "No baseline captured";
+    renderEmptyDiff("Capture a baseline to compare prompt changes.");
+    return;
+  }
+
+  const beforeLines = splitPromptLines(promptBaseline);
+  const afterLines = splitPromptLines(promptText);
+  const changes = [];
+  const lineCount = Math.max(beforeLines.length, afterLines.length);
+
+  for (let index = 0; index < lineCount; index += 1) {
+    const before = beforeLines[index];
+    const after = afterLines[index];
+
+    if (before === after) {
+      continue;
+    }
+
+    const changeType =
+      before === undefined ? "added" : after === undefined ? "removed" : "changed";
+
+    changes.push({
+      after,
+      before,
+      lineNumber: index + 1,
+      type: changeType,
+    });
+  }
+
+  if (!changes.length) {
+    diffSummary.textContent = "No line changes";
+    renderEmptyDiff("No line changes since the captured baseline.");
+    return;
+  }
+
+  diffSummary.textContent =
+    changes.length === 1 ? "1 changed line" : `${changes.length} changed lines`;
+
+  changes.forEach((change) => {
+    const item = document.createElement("li");
+    const tag = document.createElement("span");
+    const body = document.createElement("div");
+    const lineNumber = document.createElement("p");
+
+    item.setAttribute("data-change", change.type);
+    tag.className = "diff-tag";
+    tag.textContent = changeLabel(change.type);
+    lineNumber.className = "diff-line-number";
+    lineNumber.textContent = `Line ${change.lineNumber}`;
+    body.append(lineNumber);
+
+    if (change.before !== undefined) {
+      const before = document.createElement("del");
+      before.textContent = change.before || "(blank line)";
+      body.append(before);
+    }
+
+    if (change.after !== undefined) {
+      const after = document.createElement("ins");
+      after.textContent = change.after || "(blank line)";
+      body.append(after);
+    }
+
+    item.append(tag, body);
+    diffList.append(item);
+  });
 }
 
 function loadJson(key, fallback) {
@@ -164,7 +255,14 @@ function render() {
   renderChecklist(checks);
   updateQuality(score);
   updateStats(promptText);
+  renderDiff(promptText);
   saveStatus.textContent = saveJson(storageKey, state) ? "Saved" : "Not saved";
+}
+
+function captureBaseline() {
+  promptBaseline = output.value;
+  renderDiff(output.value);
+  saveStatus.textContent = "Baseline captured";
 }
 
 async function copyPrompt() {
@@ -264,6 +362,7 @@ document.querySelectorAll("[data-template]").forEach((button) => {
 
 copyButton.addEventListener("click", copyPrompt);
 downloadButton.addEventListener("click", downloadPrompt);
+captureBaselineButton.addEventListener("click", captureBaseline);
 exportPresetButton.addEventListener("click", exportPreset);
 importPresetButton.addEventListener("click", () => presetFileInput.click());
 presetFileInput.addEventListener("change", () => importPreset(presetFileInput.files[0]));

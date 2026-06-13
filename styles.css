@@ -239,8 +239,8 @@ textarea {
 #prompt-output {
   display: block;
   width: 100%;
-  height: calc(100vh - 190px);
-  min-height: 520px;
+  height: calc(100vh - 330px);
+  min-height: 360px;
   border: 1px solid #cfd6cf;
   background: #fbfcfb;
   color: #17211d;
@@ -248,6 +248,102 @@ textarea {
   font-size: 0.92rem;
   line-height: 1.55;
   white-space: pre-wrap;
+}
+
+.diff-tools {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+#diff-summary {
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.diff-list {
+  display: grid;
+  gap: 8px;
+  max-height: 220px;
+  overflow: auto;
+  padding: 0;
+  margin: 14px 0 0;
+  list-style: none;
+}
+
+.diff-list li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-left-width: 4px;
+  border-radius: 8px;
+  padding: 10px;
+  background: #fbfcfb;
+}
+
+.diff-list li[data-change="added"] {
+  border-left-color: var(--green);
+}
+
+.diff-list li[data-change="removed"] {
+  border-left-color: var(--rose);
+}
+
+.diff-list li[data-change="changed"] {
+  border-left-color: var(--amber);
+}
+
+.diff-list .diff-empty {
+  display: block;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.diff-tag {
+  align-self: start;
+  min-width: 72px;
+  border-radius: 999px;
+  padding: 4px 8px;
+  background: #eef1ed;
+  color: var(--ink);
+  font-size: 0.72rem;
+  font-weight: 850;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.diff-line-number {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.diff-list del,
+.diff-list ins {
+  display: block;
+  padding: 7px 8px;
+  border-radius: 6px;
+  font-family: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  text-decoration: none;
+  white-space: pre-wrap;
+}
+
+.diff-list del {
+  margin-bottom: 5px;
+  background: #ffe9ef;
+  color: #8b2341;
+}
+
+.diff-list ins {
+  background: #e7f3ef;
+  color: var(--green-dark);
 }
 
 .meter {
@@ -384,5 +480,10 @@ textarea {
   #prompt-output {
     height: auto;
     min-height: 420px;
+  }
+
+  .diff-tools {
+    align-items: stretch;
+    flex-direction: column;
   }
 }
