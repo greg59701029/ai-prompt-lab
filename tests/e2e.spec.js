@@ -141,6 +141,39 @@ test("saves, loads, and deletes named presets", async ({ page }) => {
   await expect(page.locator("#saved-preset-list")).toContainText("No saved presets");
 });
 
+test("supports keyboard workflow for saved preset actions", async ({ page }) => {
+  await page.goto("/");
+
+  const learningButton = page.getByRole("button", { name: "Learning" });
+  await tabTo(page, learningButton);
+  await learningButton.press("Enter");
+  await expect(page.getByRole("status")).toHaveText("Learning template");
+
+  const presetNameInput = page.locator("#preset-name-input");
+  await tabTo(page, presetNameInput, 20);
+  await page.keyboard.type("Keyboard study");
+
+  const savePresetButton = page.getByRole("button", { name: "Save preset" });
+  await tabTo(page, savePresetButton, 5);
+  await savePresetButton.press("Enter");
+  await expect(page.getByRole("status")).toHaveText("Preset saved");
+
+  await page.getByRole("button", { name: "Reset", exact: true }).press("Enter");
+  await expect(page.locator("#role-input")).toHaveValue("");
+
+  const loadPresetButton = page.getByRole("button", { name: "Load Keyboard study" });
+  await tabTo(page, loadPresetButton, 80);
+  await loadPresetButton.press("Enter");
+  await expect(page.getByRole("status")).toHaveText("Preset loaded");
+  await expect(page.locator("#role-input")).toHaveValue("Learning coach");
+
+  const deletePresetButton = page.getByRole("button", { name: "Delete Keyboard study" });
+  await tabTo(page, deletePresetButton, 5);
+  await deletePresetButton.press("Enter");
+  await expect(page.getByRole("status")).toHaveText("Preset deleted");
+  await expect(page.locator("#saved-preset-list")).toContainText("No saved presets");
+});
+
 test("downloads prompt text and records local history", async ({ page }) => {
   await page.goto("/");
 
