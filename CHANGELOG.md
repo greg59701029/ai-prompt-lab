@@ -4,6 +4,8 @@ All notable changes to AI Prompt Lab are documented here.
 
 ## Unreleased
 
+- Added keyboard workflow coverage for saved preset save, load, and delete actions
+
 ## 0.5.0 - 2026-06-14
 
 - Reworked README language to describe current status, known limitations, and real example workflows
