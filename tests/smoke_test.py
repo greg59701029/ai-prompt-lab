@@ -37,6 +37,7 @@ def main():
         "assets/screenshot.png",
         "examples/product-preset.json",
         "docs/releases/v0.4.0.md",
+        "docs/releases/v0.5.0.md",
         ".github/ISSUE_TEMPLATE/bug_report.yml",
         ".github/ISSUE_TEMPLATE/feature_request.yml",
         ".github/workflows/pages.yml",
