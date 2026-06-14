@@ -4,6 +4,8 @@ All notable changes to AI Prompt Lab are documented here.
 
 ## Unreleased
 
+## 0.5.0 - 2026-06-14
+
 - Reworked README language to describe current status, known limitations, and real example workflows
 - Removed publishing, profile, and issue-draft documents that were no longer useful after the repository went live
 - Repaired the Traditional Chinese README

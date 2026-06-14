@@ -5,7 +5,7 @@ Static browser prompt builder for drafting AI prompts with editable fields, loca
 [![CI](https://github.com/greg59701029/ai-prompt-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/greg59701029/ai-prompt-lab/actions/workflows/ci.yml)
 [![Pages](https://github.com/greg59701029/ai-prompt-lab/actions/workflows/pages.yml/badge.svg)](https://github.com/greg59701029/ai-prompt-lab/actions/workflows/pages.yml)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Version](https://img.shields.io/badge/version-0.4.0-blue)
+![Version](https://img.shields.io/badge/version-0.5.0-blue)
 
 ## Status
 
@@ -15,7 +15,7 @@ The app has no backend. Prompt content, presets, and recent history stay in the 
 
 ## Current Version
 
-v0.4.0 is the first usable static version. The next small release focuses on one new template, preset management, and accessibility coverage.
+v0.5.0 is the current usable static version. It adds browser-local named presets, a learning template, prompt diffing, and accessibility-focused workflow coverage.
 
 ## Live Demo
 
@@ -29,6 +29,7 @@ v0.4.0 is the first usable static version. The next small release focuses on one
 - Builds prompts from role, goal, audience, context, constraints, tone, and output format fields
 - Includes templates for product planning, coding tasks, research summaries, marketing briefs, support responses, data analysis, and learning plans
 - Scores prompts with 8 deterministic checks for role, goal, audience, context, constraints, format, evidence, and uncertainty
+- Saves named prompt setups locally in the browser
 - Exports editable presets as JSON
 - Downloads generated prompts as plain text
 - Stores the last 5 copied or downloaded prompts in `localStorage`
