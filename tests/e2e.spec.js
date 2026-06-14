@@ -118,6 +118,29 @@ test("captures a prompt baseline and shows changed lines", async ({ page }) => {
   await expect(page.getByLabel("Prompt changes")).toContainText("two validation steps");
 });
 
+test("saves, loads, and deletes named presets", async ({ page }) => {
+  await page.goto("/");
+
+  await page.getByRole("button", { name: "Learning" }).click();
+  await page.locator("#preset-name-input").fill("Interview study");
+  await page.getByRole("button", { name: "Save preset" }).click();
+
+  await expect(page.getByRole("status")).toHaveText("Preset saved");
+  await expect(page.locator("#saved-preset-list")).toContainText("Interview study");
+
+  await page.getByRole("button", { name: "Reset", exact: true }).click();
+  await expect(page.locator("#role-input")).toHaveValue("");
+
+  await page.getByRole("button", { name: "Load Interview study" }).click();
+  await expect(page.getByRole("status")).toHaveText("Preset loaded");
+  await expect(page.locator("#role-input")).toHaveValue("Learning coach");
+  await expect(page.getByLabel("Generated prompt")).toHaveValue(/technical interview/);
+
+  await page.getByRole("button", { name: "Delete Interview study" }).click();
+  await expect(page.getByRole("status")).toHaveText("Preset deleted");
+  await expect(page.locator("#saved-preset-list")).toContainText("No saved presets");
+});
+
 test("downloads prompt text and records local history", async ({ page }) => {
   await page.goto("/");
 

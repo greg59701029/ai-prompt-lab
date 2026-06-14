@@ -25,6 +25,9 @@ const captureBaselineButton = document.querySelector("#capture-baseline-btn");
 const exportPresetButton = document.querySelector("#export-preset-btn");
 const importPresetButton = document.querySelector("#import-preset-btn");
 const presetFileInput = document.querySelector("#preset-file-input");
+const presetNameInput = document.querySelector("#preset-name-input");
+const savePresetButton = document.querySelector("#save-preset-btn");
+const savedPresetList = document.querySelector("#saved-preset-list");
 const resetButton = document.querySelector("#reset-btn");
 const saveStatus = document.querySelector("#save-status");
 const scoreBadge = document.querySelector("#score-badge");
@@ -40,6 +43,7 @@ const diffList = document.querySelector("#prompt-diff");
 
 const storageKey = "ai-prompt-lab-state";
 const historyKey = "ai-prompt-lab-history";
+const savedPresetsKey = "ai-prompt-lab-saved-presets";
 let promptBaseline = "";
 
 function readState() {
@@ -201,6 +205,131 @@ function saveJson(key, value) {
   } catch {
     return false;
   }
+}
+
+function normalizePresetName(value) {
+  return String(value || "").trim().replace(/\s+/g, " ");
+}
+
+function createPresetId() {
+  if (window.crypto && typeof window.crypto.randomUUID === "function") {
+    return window.crypto.randomUUID();
+  }
+
+  return `preset-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
+
+function readSavedPresets() {
+  const savedPresets = loadJson(savedPresetsKey, []);
+
+  if (!Array.isArray(savedPresets)) {
+    return [];
+  }
+
+  return savedPresets.filter(
+    (item) =>
+      item &&
+      typeof item.id === "string" &&
+      typeof item.name === "string" &&
+      item.preset &&
+      typeof item.preset === "object" &&
+      !Array.isArray(item.preset)
+  );
+}
+
+function renderSavedPresets(presets = readSavedPresets()) {
+  savedPresetList.replaceChildren();
+
+  if (!presets.length) {
+    const empty = document.createElement("li");
+    empty.className = "saved-preset-empty";
+    empty.textContent = "No saved presets";
+    savedPresetList.append(empty);
+    return;
+  }
+
+  presets.forEach((preset) => {
+    const item = document.createElement("li");
+    const loadButton = document.createElement("button");
+    const deleteButton = document.createElement("button");
+
+    item.className = "saved-preset-item";
+    loadButton.type = "button";
+    loadButton.textContent = preset.name;
+    loadButton.setAttribute("aria-label", `Load ${preset.name}`);
+    loadButton.addEventListener("click", () => loadNamedPreset(preset.id));
+
+    deleteButton.type = "button";
+    deleteButton.className = "secondary saved-preset-delete";
+    deleteButton.textContent = "Delete";
+    deleteButton.setAttribute("aria-label", `Delete ${preset.name}`);
+    deleteButton.addEventListener("click", () => deleteNamedPreset(preset.id));
+
+    item.append(loadButton, deleteButton);
+    savedPresetList.append(item);
+  });
+}
+
+function saveNamedPreset() {
+  const name = normalizePresetName(presetNameInput.value);
+
+  if (!name) {
+    saveStatus.textContent = "Preset name required";
+    presetNameInput.focus();
+    return;
+  }
+
+  const savedPresets = readSavedPresets();
+  const existing = savedPresets.find(
+    (preset) => preset.name.toLowerCase() === name.toLowerCase()
+  );
+  const nextPreset = {
+    id: existing ? existing.id : createPresetId(),
+    name,
+    preset: readState(),
+    updatedAt: new Date().toISOString(),
+  };
+  const nextPresets = [
+    nextPreset,
+    ...savedPresets.filter((preset) => preset.id !== nextPreset.id),
+  ].slice(0, 12);
+
+  if (!saveJson(savedPresetsKey, nextPresets)) {
+    saveStatus.textContent = "Preset not saved";
+    return;
+  }
+
+  presetNameInput.value = "";
+  renderSavedPresets(nextPresets);
+  saveStatus.textContent = "Preset saved";
+}
+
+function loadNamedPreset(id) {
+  const savedPresets = readSavedPresets();
+  const savedPreset = savedPresets.find((preset) => preset.id === id);
+
+  if (!savedPreset) {
+    renderSavedPresets(savedPresets);
+    saveStatus.textContent = "Preset missing";
+    return;
+  }
+
+  writeState(savedPreset.preset);
+  render();
+  saveStatus.textContent = "Preset loaded";
+}
+
+function deleteNamedPreset(id) {
+  const savedPresets = readSavedPresets();
+  const nextPresets = savedPresets.filter((preset) => preset.id !== id);
+
+  if (!saveJson(savedPresetsKey, nextPresets)) {
+    saveStatus.textContent = "Preset not deleted";
+    return;
+  }
+
+  renderSavedPresets(nextPresets);
+  saveStatus.textContent = "Preset deleted";
 }
 
 function saveHistory(promptText) {
@@ -366,8 +495,15 @@ captureBaselineButton.addEventListener("click", captureBaseline);
 exportPresetButton.addEventListener("click", exportPreset);
 importPresetButton.addEventListener("click", () => presetFileInput.click());
 presetFileInput.addEventListener("change", () => importPreset(presetFileInput.files[0]));
+savePresetButton.addEventListener("click", saveNamedPreset);
+presetNameInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    saveNamedPreset();
+  }
+});
 resetButton.addEventListener("click", resetForm);
 
 writeState(loadJson(storageKey, templates.product));
 renderHistory();
+renderSavedPresets();
 render();

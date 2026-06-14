@@ -12,6 +12,7 @@ All notable changes to AI Prompt Lab are documented here.
 - Added a learning prompt template for study plans and interview preparation
 - Added keyboard workflow and checklist state coverage for accessibility
 - Added a baseline prompt diff view for comparing changed lines
+- Added browser-local named preset management for saved prompt setups
 
 ## 0.4.0 - 2026-06-13
 
