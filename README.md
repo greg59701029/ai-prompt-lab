@@ -113,7 +113,11 @@ Preset export is different from prompt download:
 - `Download` saves the generated prompt as plain text.
 - `Export preset` saves the editable builder state as JSON.
 
-See `examples/product-preset.json` for the current preset format.
+Sample preset files:
+
+- `examples/product-preset.json`
+- `examples/code-preset.json`
+- `examples/learning-preset.json`
 
 ## Development
 
@@ -152,8 +156,10 @@ The browser tests cover template selection, prompt download, invalid preset impo
 |-- assets/
 |   `-- screenshot.png
 |-- examples/
-|   |-- prompts.md
-|   `-- product-preset.json
+|   |-- code-preset.json
+|   |-- learning-preset.json
+|   |-- product-preset.json
+|   `-- prompts.md
 |-- docs/
 |   `-- releases/
 |-- tests/
