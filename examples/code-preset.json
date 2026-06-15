@@ -1,0 +1,14 @@
+{
+  "type": "ai-prompt-lab/preset",
+  "version": 1,
+  "exportedAt": "2026-06-15T00:00:00.000Z",
+  "preset": {
+    "role": "Senior software engineer",
+    "goal": "Review the implementation plan and produce a practical coding task breakdown.",
+    "audience": "Developer preparing a GitHub project",
+    "context": "The project should be small, maintainable, and easy to explain in a README.",
+    "constraints": "Prefer simple dependencies, include tests, and call out any risky assumptions.",
+    "tone": "technical and precise",
+    "format": "working code with explanation"
+  }
+}

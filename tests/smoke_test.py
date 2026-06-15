@@ -35,6 +35,8 @@ def main():
         "CONTRIBUTING.md",
         "ROADMAP.md",
         "assets/screenshot.png",
+        "examples/code-preset.json",
+        "examples/learning-preset.json",
         "examples/product-preset.json",
         "docs/releases/v0.4.0.md",
         "docs/releases/v0.5.0.md",
@@ -111,6 +113,8 @@ def main():
     assert_contains(readme, "Known Limitations", "README.md")
     assert_contains(readme, "Scores prompts with 8 deterministic checks", "README.md")
     assert_contains(readme, "Example Workflows", "README.md")
+    assert_contains(readme, "examples/code-preset.json", "README.md")
+    assert_contains(readme, "examples/learning-preset.json", "README.md")
 
     disallowed = ["eval(", "new Function(", "document.write("]
     for path, text in [("app.js", js), ("prompt-core.js", core)]:
