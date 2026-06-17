@@ -243,7 +243,7 @@ function renderSavedPresets(presets = readSavedPresets()) {
   if (!presets.length) {
     const empty = document.createElement("li");
     empty.className = "saved-preset-empty";
-    empty.textContent = "No saved presets";
+    empty.textContent = "No saved presets yet. Name the current setup to reuse it later.";
     savedPresetList.append(empty);
     return;
   }
