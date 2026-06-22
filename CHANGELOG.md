@@ -4,6 +4,7 @@ All notable changes to AI Prompt Lab are documented here.
 
 ## Unreleased
 
+- Clarified the saved preset empty state so first-time users know how to reuse the current setup.
 - Added sample preset files for code and learning workflows
 - Added keyboard workflow coverage for saved preset save, load, and delete actions
 

@@ -138,7 +138,9 @@ test("saves, loads, and deletes named presets", async ({ page }) => {
 
   await page.getByRole("button", { name: "Delete Interview study" }).click();
   await expect(page.getByRole("status")).toHaveText("Preset deleted");
-  await expect(page.locator("#saved-preset-list")).toContainText("No saved presets");
+  await expect(page.locator("#saved-preset-list")).toContainText(
+    "No saved presets yet. Name the current setup to reuse it later."
+  );
 });
 
 test("supports keyboard workflow for saved preset actions", async ({ page }) => {
@@ -171,7 +173,9 @@ test("supports keyboard workflow for saved preset actions", async ({ page }) => 
   await tabTo(page, deletePresetButton, 5);
   await deletePresetButton.press("Enter");
   await expect(page.getByRole("status")).toHaveText("Preset deleted");
-  await expect(page.locator("#saved-preset-list")).toContainText("No saved presets");
+  await expect(page.locator("#saved-preset-list")).toContainText(
+    "No saved presets yet. Name the current setup to reuse it later."
+  );
 });
 
 test("downloads prompt text and records local history", async ({ page }) => {

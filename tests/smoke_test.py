@@ -99,6 +99,11 @@ def main():
     assert_contains(js, "function importPreset", "app.js")
     assert_contains(js, "function saveNamedPreset", "app.js")
     assert_contains(js, "function renderSavedPresets", "app.js")
+    assert_contains(
+        js,
+        "No saved presets yet. Name the current setup to reuse it later.",
+        "app.js",
+    )
     assert_contains(js, "function captureBaseline", "app.js")
     assert_contains(js, "function renderDiff", "app.js")
     assert_contains(js, "aria-valuenow", "app.js")
