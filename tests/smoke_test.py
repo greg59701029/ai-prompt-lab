@@ -97,6 +97,7 @@ def main():
     assert_contains(js, "function updateStats", "app.js")
     assert_contains(js, "function exportPreset", "app.js")
     assert_contains(js, "function importPreset", "app.js")
+    assert_contains(js, "Preset import failed. Check the JSON file.", "app.js")
     assert_contains(js, "function saveNamedPreset", "app.js")
     assert_contains(js, "function renderSavedPresets", "app.js")
     assert_contains(
