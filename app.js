@@ -454,7 +454,7 @@ async function importPreset(file) {
     render();
     saveStatus.textContent = "Preset imported";
   } catch (error) {
-    saveStatus.textContent = "Import failed";
+    saveStatus.textContent = "Preset import failed. Check the JSON file.";
     console.error(error);
   } finally {
     presetFileInput.value = "";

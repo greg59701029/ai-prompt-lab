@@ -201,7 +201,9 @@ test("rejects invalid preset JSON without replacing current fields", async ({ pa
 
   await page.setInputFiles("#preset-file-input", presetPath);
 
-  await expect(page.getByRole("status")).toHaveText("Import failed");
+  await expect(page.getByRole("status")).toHaveText(
+    "Preset import failed. Check the JSON file."
+  );
   await expect(page.locator("#role-input")).toHaveValue("Senior product strategist");
   await expect(page.getByLabel("Generated prompt")).toHaveValue(/Senior product strategist/);
 });
